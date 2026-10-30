@@ -1,0 +1,43 @@
+-- База: vacancies_bench; запрос: sql/queries/q6_stable_employers.sql; дата: 2026-10-31 02:52
+-- Объём: 300000 вакансий, 600846 версий
+
+Sort  (cost=53707.83..53731.54 rows=9482 width=45) (actual time=142.326..142.407 rows=5009 loops=1)
+  Sort Key: (count(*)) DESC, e.name, (min(numbered.month))
+  Sort Method: quicksort  Memory: 545kB
+  Buffers: shared hit=3089 read=153
+  ->  Hash Join  (cost=52582.49..53081.50 rows=9482 width=45) (actual time=121.428..122.053 rows=5009 loops=1)
+        Hash Cond: (numbered.employer_id = e.id)
+        Buffers: shared hit=3080 read=153
+        ->  HashAggregate  (cost=52427.99..52807.27 rows=9482 width=40) (actual time=120.927..121.243 rows=5009 loops=1)
+              Group Key: numbered.employer_id, (numbered.month_no - numbered.rn)
+              Filter: (count(*) >= 3)
+              Batches: 1  Memory Usage: 1553kB
+              Rows Removed by Filter: 22
+              Buffers: shared hit=3038 read=153
+              ->  Subquery Scan on numbered  (cost=5.76..48161.09 rows=284460 width=28) (actual time=0.345..117.636 rows=39966 loops=1)
+                    Buffers: shared hit=3038 read=153
+                    ->  WindowAgg  (cost=5.76..44605.34 rows=284460 width=32) (actual time=0.344..115.947 rows=39966 loops=1)
+                          Buffers: shared hit=3038 read=153
+                          ->  WindowAgg  (cost=5.76..36782.69 rows=284460 width=20) (actual time=0.284..104.070 rows=39966 loops=1)
+                                Buffers: shared hit=3038 read=153
+                                ->  Unique  (cost=5.76..31804.64 rows=284460 width=12) (actual time=0.280..99.850 rows=39966 loops=1)
+                                      Buffers: shared hit=3038 read=153
+                                      ->  Incremental Sort  (cost=5.76..30382.34 rows=284460 width=12) (actual time=0.280..91.439 rows=285028 loops=1)
+                                            Sort Key: v.employer_id, ((date_trunc('month'::text, (v.created_at AT TIME ZONE 'Europe/Moscow'::text)))::date)
+                                            Presorted Key: v.employer_id
+                                            Full-sort Groups: 4999  Sort Method: quicksort  Average Memory: 26kB  Peak Memory: 26kB
+                                            Pre-sorted Groups: 834  Sort Method: quicksort  Average Memory: 27kB  Peak Memory: 27kB
+                                            Buffers: shared hit=3038 read=153
+                                            ->  Index Only Scan using idx_vacancy_duplicate_lookup on vacancy v  (cost=0.42..18435.92 rows=284460 width=12) (actual time=0.243..65.894 rows=285028 loops=1)
+                                                  Index Cond: (employer_id IS NOT NULL)
+                                                  Heap Fetches: 419
+                                                  Buffers: shared hit=3038 read=153
+        ->  Hash  (cost=92.00..92.00 rows=5000 width=29) (actual time=0.492..0.492 rows=5000 loops=1)
+              Buckets: 8192  Batches: 1  Memory Usage: 377kB
+              Buffers: shared hit=42
+              ->  Seq Scan on employer e  (cost=0.00..92.00 rows=5000 width=29) (actual time=0.004..0.278 rows=5000 loops=1)
+                    Buffers: shared hit=42
+Planning:
+  Buffers: shared hit=255
+Planning Time: 0.418 ms
+Execution Time: 142.585 ms

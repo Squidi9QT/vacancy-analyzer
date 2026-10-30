@@ -1,0 +1,49 @@
+-- База: vacancies_bench; запрос: sql/queries/q2_salary_median_by_month.sql; дата: 2026-10-31 02:52
+-- Объём: 300000 вакансий, 600846 версий
+
+Incremental Sort  (cost=75421.37..75656.37 rows=2934 width=81) (actual time=601.521..625.658 rows=1464 loops=1)
+  Sort Key: v.role, (GROUPING(a.name)) DESC, (CASE WHEN (GROUPING(a.name) = 1) THEN 'Все города'::text ELSE a.name END), ((date_trunc('month'::text, (v.created_at AT TIME ZONE 'Europe/Moscow'::text)))::date)
+  Presorted Key: v.role
+  Full-sort Groups: 3  Sort Method: quicksort  Average Memory: 31kB  Peak Memory: 31kB
+  Pre-sorted Groups: 3  Sort Method: quicksort  Average Memory: 73kB  Peak Memory: 73kB
+  Buffers: shared hit=1068919 read=18769 written=2615, temp read=866 written=869
+  ->  GroupAggregate  (cost=75355.28..75479.98 rows=2934 width=81) (actual time=589.561..622.436 rows=1464 loops=1)
+        Group Key: v.role, ((date_trunc('month'::text, (v.created_at AT TIME ZONE 'Europe/Moscow'::text)))::date), a.name
+        Group Key: v.role, ((date_trunc('month'::text, (v.created_at AT TIME ZONE 'Europe/Moscow'::text)))::date)
+        Buffers: shared hit=1068910 read=18769 written=2615, temp read=866 written=869
+        ->  Sort  (cost=75355.28..75358.95 rows=1467 width=33) (actual time=589.512..600.048 rows=146260 loops=1)
+              Sort Key: v.role, ((date_trunc('month'::text, (v.created_at AT TIME ZONE 'Europe/Moscow'::text)))::date), a.name
+              Sort Method: external merge  Disk: 6928kB
+              Buffers: shared hit=1068902 read=18769 written=2615, temp read=866 written=869
+              ->  Nested Loop  (cost=0.99..75278.13 rows=1467 width=33) (actual time=0.223..409.087 rows=146260 loops=1)
+                    Buffers: shared hit=1068902 read=18769 written=2615
+                    ->  Nested Loop  (cost=0.85..75041.71 rows=1467 width=28) (actual time=0.220..368.693 rows=146260 loops=1)
+                          Buffers: shared hit=776382 read=18769 written=2615
+                          ->  Nested Loop  (cost=0.42..65483.82 rows=1952 width=20) (actual time=0.039..233.180 rows=194892 loops=1)
+                                Join Filter: (c.code = f.currency_code)
+                                Rows Removed by Join Filter: 420432
+                                Buffers: shared hit=746 read=14837 written=2241
+                                ->  Subquery Scan on f  (cost=0.42..65281.06 rows=3004 width=29) (actual time=0.021..169.082 rows=300000 loops=1)
+                                      Filter: (f.version_no = 1)
+                                      Buffers: shared hit=745 read=14837 written=2241
+                                      ->  WindowAgg  (cost=0.42..57770.49 rows=600846 width=141) (actual time=0.021..158.987 rows=300000 loops=1)
+                                            Run Condition: (row_number() OVER (?) <= 1)
+                                            Buffers: shared hit=745 read=14837 written=2241
+                                            ->  Index Scan using uq_snapshot_vacancy_valid_from on vacancy_snapshot s  (cost=0.42..47255.68 rows=600846 width=37) (actual time=0.016..65.872 rows=600846 loops=1)
+                                                  Buffers: shared hit=745 read=14837 written=2241
+                                ->  Materialize  (cost=0.00..1.06 rows=4 width=9) (actual time=0.000..0.000 rows=2 loops=300000)
+                                      Buffers: shared hit=1
+                                      ->  Seq Scan on currency c  (cost=0.00..1.04 rows=4 width=9) (actual time=0.002..0.003 rows=4 loops=1)
+                                            Buffers: shared hit=1
+                          ->  Index Scan using vacancy_pkey on vacancy v  (cost=0.42..4.88 rows=1 width=24) (actual time=0.001..0.001 rows=1 loops=194892)
+                                Index Cond: (id = f.vacancy_id)
+                                Filter: (role <> 'other'::text)
+                                Rows Removed by Filter: 0
+                                Buffers: shared hit=775636 read=3932 written=374
+                    ->  Index Scan using area_pkey on area a  (cost=0.14..0.16 rows=1 width=21) (actual time=0.000..0.000 rows=1 loops=146260)
+                          Index Cond: (id = f.area_id)
+                          Buffers: shared hit=292520
+Planning:
+  Buffers: shared hit=504 read=1
+Planning Time: 1.418 ms
+Execution Time: 628.980 ms

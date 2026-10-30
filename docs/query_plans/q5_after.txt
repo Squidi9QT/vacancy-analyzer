@@ -1,0 +1,64 @@
+-- База: vacancies_bench; запрос: sql/queries/q5_new_last_7_days.sql; дата: 2026-10-31 02:52
+-- Объём: 300000 вакансий, 600846 версий
+
+Sort  (cost=46356.30..46356.30 rows=1 width=148) (actual time=108.456..108.657 rows=8589 loops=1)
+  Sort Key: v.first_seen_at DESC, v.hh_id
+  Sort Method: quicksort  Memory: 1575kB
+  Buffers: shared hit=121064 read=8263 written=4, temp read=1685 written=1685
+  ->  Nested Loop  (cost=14443.43..46356.29 rows=1 width=148) (actual time=61.531..107.025 rows=8589 loops=1)
+        Buffers: shared hit=121058 read=8263 written=4, temp read=1685 written=1685
+        ->  Nested Loop Left Join  (cost=14443.29..46347.65 rows=1 width=120) (actual time=61.361..86.875 rows=8589 loops=1)
+              Buffers: shared hit=82137 read=5598, temp read=1685 written=1685
+              ->  Nested Loop Left Join  (cost=14443.01..46347.35 rows=1 width=99) (actual time=61.356..82.979 rows=8589 loops=1)
+                    Buffers: shared hit=57735 read=5598, temp read=1685 written=1685
+                    ->  Hash Right Join  (cost=14442.46..46346.62 rows=1 width=95) (actual time=61.344..70.865 rows=8589 loops=1)
+                          Hash Cond: (prior.vacancy_id = v.id)
+                          Join Filter: (prior.valid_from < ((max(load_run.as_of) - '7 days'::interval)))
+                          Rows Removed by Join Filter: 17454
+                          Filter: (prior.id IS NULL)
+                          Rows Removed by Filter: 150
+                          Buffers: shared hit=12181 read=5598, temp read=1685 written=1685
+                          ->  Seq Scan on vacancy_snapshot prior  (cost=0.00..18542.46 rows=600846 width=24) (actual time=0.003..27.910 rows=600846 loops=1)
+                                Buffers: shared hit=6963 read=5571
+                          ->  Hash  (cost=11629.46..11629.46 rows=100000 width=103) (actual time=6.730..6.731 rows=8739 loops=1)
+                                Buckets: 65536  Batches: 2  Memory Usage: 1100kB
+                                Buffers: shared hit=5218 read=27, temp written=67
+                                ->  Nested Loop  (cost=1876.44..11629.46 rows=100000 width=103) (actual time=0.743..5.633 rows=8739 loops=1)
+                                      Buffers: shared hit=5218 read=27
+                                      ->  Aggregate  (cost=1.01..1.03 rows=1 width=16) (actual time=0.006..0.006 rows=1 loops=1)
+                                            Buffers: shared hit=1
+                                            ->  Seq Scan on load_run  (cost=0.00..1.01 rows=1 width=8) (actual time=0.002..0.002 rows=1 loops=1)
+                                                  Filter: (status = 'success'::text)
+                                                  Buffers: shared hit=1
+                                      ->  Bitmap Heap Scan on vacancy v  (cost=1875.42..10628.42 rows=100000 width=95) (actual time=0.736..5.059 rows=8739 loops=1)
+                                            Recheck Cond: (first_seen_at >= ((max(load_run.as_of) - '7 days'::interval)))
+                                            Heap Blocks: exact=5217
+                                            Buffers: shared hit=5217 read=27
+                                            ->  Bitmap Index Scan on idx_vacancy_first_seen_at  (cost=0.00..1850.42 rows=100000 width=0) (actual time=0.422..0.422 rows=8739 loops=1)
+                                                  Index Cond: (first_seen_at >= ((max(load_run.as_of) - '7 days'::interval)))
+                                                  Buffers: shared read=27
+                    ->  Nested Loop  (cost=0.55..0.73 rows=1 width=12) (actual time=0.001..0.001 rows=1 loops=8589)
+                          Buffers: shared hit=45554
+                          ->  Index Scan using vacancy_pkey on vacancy v_1  (cost=0.42..0.55 rows=1 width=21) (actual time=0.001..0.001 rows=1 loops=8589)
+                                Index Cond: (id = v.id)
+                                Buffers: shared hit=34356
+                          ->  Index Scan using currency_pkey on currency c  (cost=0.13..0.15 rows=1 width=9) (actual time=0.000..0.000 rows=1 loops=8589)
+                                Index Cond: (code = v_1.currency_code)
+                                Buffers: shared hit=11198
+              ->  Index Scan using employer_pkey on employer e  (cost=0.28..0.30 rows=1 width=29) (actual time=0.000..0.000 rows=1 loops=8589)
+                    Index Cond: (id = v.employer_id)
+                    Buffers: shared hit=24402
+        ->  Index Scan using area_pkey on area a  (cost=0.14..0.16 rows=1 width=21) (actual time=0.000..0.000 rows=1 loops=8589)
+              Index Cond: (id = v.area_id)
+              Buffers: shared hit=17178
+        SubPlan 1
+          ->  Aggregate  (cost=8.46..8.47 rows=1 width=32) (actual time=0.002..0.002 rows=1 loops=8589)
+                Buffers: shared hit=21743 read=2665 written=4
+                ->  Index Scan using idx_vacancy_duplicate_lookup on vacancy d  (cost=0.43..8.46 rows=1 width=10) (actual time=0.001..0.001 rows=0 loops=8589)
+                      Index Cond: ((employer_id = v.employer_id) AND (area_id = v.area_id) AND (lower(name) = lower(v.name)) AND (created_at < v.created_at) AND (created_at >= (v.created_at - '14 days'::interval)))
+                      Filter: (id <> v.id)
+                      Buffers: shared hit=21743 read=2665 written=4
+Planning:
+  Buffers: shared hit=683 read=5
+Planning Time: 1.152 ms
+Execution Time: 108.927 ms

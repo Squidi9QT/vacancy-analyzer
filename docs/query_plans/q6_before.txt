@@ -1,0 +1,49 @@
+-- База: vacancies_bench; запрос: sql/queries/q6_stable_employers.sql (первая версия); дата: 2026-10-31 02:52
+-- Объём: 300000 вакансий, 600846 версий
+
+Sort  (cost=61184620.89..61184644.67 rows=9511 width=45) (actual time=4042.307..4042.391 rows=5009 loops=1)
+  Sort Key: (count(*)) DESC, e.name, (min(numbered.month))
+  Sort Method: quicksort  Memory: 545kB
+  Buffers: shared hit=7410 read=144
+  CTE active_months
+    ->  HashAggregate  (cost=30921.21..38700.64 rows=285320 width=12) (actual time=78.722..80.194 rows=39966 loops=1)
+          Group Key: v.employer_id, (date_trunc('month'::text, (v.created_at AT TIME ZONE 'Europe/Moscow'::text)))::date
+          Planned Partitions: 4  Batches: 1  Memory Usage: 4881kB
+          Buffers: shared hit=7359 read=144
+          ->  Seq Scan on vacancy v  (cost=0.00..12642.90 rows=285320 width=12) (actual time=0.131..64.200 rows=285028 loops=1)
+                Filter: (employer_id IS NOT NULL)
+                Rows Removed by Filter: 14972
+                Buffers: shared hit=7359 read=144
+  ->  Hash Join  (cost=52998.96..61145291.79 rows=9511 width=45) (actual time=100.539..4022.288 rows=5009 loops=1)
+        Hash Cond: (numbered.employer_id = e.id)
+        Buffers: shared hit=7401 read=144
+        ->  HashAggregate  (cost=52844.46..53224.89 rows=9511 width=32) (actual time=99.291..100.574 rows=5009 loops=1)
+              Group Key: numbered.employer_id, (numbered.month_no - numbered.rn)
+              Filter: (count(*) >= 3)
+              Batches: 1  Memory Usage: 1553kB
+              Rows Removed by Filter: 22
+              Buffers: shared hit=7359 read=144
+              ->  Subquery Scan on numbered  (cost=36438.56..49277.96 rows=285320 width=20) (actual time=86.501..96.968 rows=39966 loops=1)
+                    Buffers: shared hit=7359 read=144
+                    ->  WindowAgg  (cost=36438.56..45711.46 rows=285320 width=24) (actual time=86.501..95.644 rows=39966 loops=1)
+                          Buffers: shared hit=7359 read=144
+                          ->  Sort  (cost=36438.56..37151.86 rows=285320 width=12) (actual time=86.495..87.150 rows=39966 loops=1)
+                                Sort Key: active_months.employer_id, active_months.month
+                                Sort Method: quicksort  Memory: 3098kB
+                                Buffers: shared hit=7359 read=144
+                                ->  CTE Scan on active_months  (cost=0.00..5706.40 rows=285320 width=12) (actual time=78.723..82.573 rows=39966 loops=1)
+                                      Buffers: shared hit=7359 read=144
+        ->  Hash  (cost=92.00..92.00 rows=5000 width=29) (actual time=0.471..0.472 rows=5000 loops=1)
+              Buckets: 8192  Batches: 1  Memory Usage: 377kB
+              Buffers: shared hit=42
+              ->  Seq Scan on employer e  (cost=0.00..92.00 rows=5000 width=29) (actual time=0.005..0.244 rows=5000 loops=1)
+                    Buffers: shared hit=42
+        SubPlan 2
+          ->  Aggregate  (cost=6423.27..6423.28 rows=1 width=8) (actual time=0.783..0.783 rows=1 loops=5009)
+                ->  CTE Scan on active_months am  (cost=0.00..6419.70 rows=1427 width=0) (actual time=0.087..0.782 rows=8 loops=5009)
+                      Filter: (employer_id = numbered.employer_id)
+                      Rows Removed by Filter: 39958
+Planning:
+  Buffers: shared hit=207
+Planning Time: 0.346 ms
+Execution Time: 4042.774 ms
