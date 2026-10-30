@@ -1,0 +1,2876 @@
+// Сгенерировано командой `python -m src.main report`. Не редактировать вручную.
+// Обычный <script>, а не fetch('data.json'): так сайт работает при открытии файла без сервера.
+window.REPORT_DATA = {
+ "meta": {
+  "as_of": "2026-10-31 03:59:59+07",
+  "load_runs": 244,
+  "vacancies": 1162,
+  "snapshots": 1895,
+  "employers": 34,
+  "skills": 37
+ },
+ "q1_top_skills": [
+  {
+   "skill": "SQL",
+   "vacancies": 609,
+   "system_analyst": 290,
+   "data_analyst": 319,
+   "share_pct": 70.2,
+   "place": 1
+  },
+  {
+   "skill": "Python",
+   "vacancies": 364,
+   "system_analyst": 63,
+   "data_analyst": 301,
+   "share_pct": 42.0,
+   "place": 2
+  },
+  {
+   "skill": "PostgreSQL",
+   "vacancies": 272,
+   "system_analyst": 131,
+   "data_analyst": 141,
+   "share_pct": 31.4,
+   "place": 3
+  },
+  {
+   "skill": "REST API",
+   "vacancies": 255,
+   "system_analyst": 255,
+   "data_analyst": 0,
+   "share_pct": 29.4,
+   "place": 4
+  },
+  {
+   "skill": "BPMN",
+   "vacancies": 231,
+   "system_analyst": 231,
+   "data_analyst": 0,
+   "share_pct": 26.6,
+   "place": 5
+  },
+  {
+   "skill": "Pandas",
+   "vacancies": 227,
+   "system_analyst": 0,
+   "data_analyst": 227,
+   "share_pct": 26.2,
+   "place": 6
+  },
+  {
+   "skill": "MS Excel",
+   "vacancies": 221,
+   "system_analyst": 0,
+   "data_analyst": 221,
+   "share_pct": 25.5,
+   "place": 7
+  },
+  {
+   "skill": "UML",
+   "vacancies": 217,
+   "system_analyst": 217,
+   "data_analyst": 0,
+   "share_pct": 25.0,
+   "place": 8
+  },
+  {
+   "skill": "Power BI",
+   "vacancies": 208,
+   "system_analyst": 0,
+   "data_analyst": 208,
+   "share_pct": 24.0,
+   "place": 9
+  },
+  {
+   "skill": "Jira",
+   "vacancies": 204,
+   "system_analyst": 204,
+   "data_analyst": 0,
+   "share_pct": 23.5,
+   "place": 10
+  },
+  {
+   "skill": "Confluence",
+   "vacancies": 190,
+   "system_analyst": 190,
+   "data_analyst": 0,
+   "share_pct": 21.9,
+   "place": 11
+  },
+  {
+   "skill": "A/B-тестирование",
+   "vacancies": 183,
+   "system_analyst": 0,
+   "data_analyst": 183,
+   "share_pct": 21.1,
+   "place": 12
+  },
+  {
+   "skill": "Математическая статистика",
+   "vacancies": 175,
+   "system_analyst": 0,
+   "data_analyst": 175,
+   "share_pct": 20.2,
+   "place": 13
+  },
+  {
+   "skill": "JSON",
+   "vacancies": 174,
+   "system_analyst": 174,
+   "data_analyst": 0,
+   "share_pct": 20.1,
+   "place": 14
+  },
+  {
+   "skill": "Git",
+   "vacancies": 170,
+   "system_analyst": 73,
+   "data_analyst": 97,
+   "share_pct": 19.6,
+   "place": 15
+  },
+  {
+   "skill": "ClickHouse",
+   "vacancies": 150,
+   "system_analyst": 0,
+   "data_analyst": 150,
+   "share_pct": 17.3,
+   "place": 16
+  },
+  {
+   "skill": "Swagger",
+   "vacancies": 148,
+   "system_analyst": 148,
+   "data_analyst": 0,
+   "share_pct": 17.1,
+   "place": 17
+  },
+  {
+   "skill": "Postman",
+   "vacancies": 136,
+   "system_analyst": 136,
+   "data_analyst": 0,
+   "share_pct": 15.7,
+   "place": 18
+  },
+  {
+   "skill": "Tableau",
+   "vacancies": 127,
+   "system_analyst": 0,
+   "data_analyst": 127,
+   "share_pct": 14.6,
+   "place": 19
+  },
+  {
+   "skill": "XML",
+   "vacancies": 120,
+   "system_analyst": 120,
+   "data_analyst": 0,
+   "share_pct": 13.8,
+   "place": 20
+  }
+ ],
+ "q1b_skills_by_city": [
+  {
+   "skill": "BPMN",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 12,
+   "share_pct": 24.0
+  },
+  {
+   "skill": "BPMN",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 16,
+   "share_pct": 29.6
+  },
+  {
+   "skill": "BPMN",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 8,
+   "share_pct": 24.2
+  },
+  {
+   "skill": "BPMN",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 93,
+   "share_pct": 26.3
+  },
+  {
+   "skill": "BPMN",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 25,
+   "share_pct": 29.4
+  },
+  {
+   "skill": "BPMN",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 33,
+   "share_pct": 30.0
+  },
+  {
+   "skill": "BPMN",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 12,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "BPMN",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 32,
+   "share_pct": 23.2
+  },
+  {
+   "skill": "Jira",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 9,
+   "share_pct": 18.0
+  },
+  {
+   "skill": "Jira",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 16,
+   "share_pct": 29.6
+  },
+  {
+   "skill": "Jira",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 6,
+   "share_pct": 18.2
+  },
+  {
+   "skill": "Jira",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 86,
+   "share_pct": 24.4
+  },
+  {
+   "skill": "Jira",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 21,
+   "share_pct": 24.7
+  },
+  {
+   "skill": "Jira",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 25,
+   "share_pct": 22.7
+  },
+  {
+   "skill": "Jira",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 12,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "Jira",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 29,
+   "share_pct": 21.0
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 12,
+   "share_pct": 24.0
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 9,
+   "share_pct": 16.7
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 8,
+   "share_pct": 24.2
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 93,
+   "share_pct": 26.3
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 22,
+   "share_pct": 25.9
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 29,
+   "share_pct": 26.4
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 12,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "MS Excel",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 36,
+   "share_pct": 26.1
+  },
+  {
+   "skill": "Pandas",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 17,
+   "share_pct": 34.0
+  },
+  {
+   "skill": "Pandas",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 10,
+   "share_pct": 18.5
+  },
+  {
+   "skill": "Pandas",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 11,
+   "share_pct": 33.3
+  },
+  {
+   "skill": "Pandas",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 92,
+   "share_pct": 26.1
+  },
+  {
+   "skill": "Pandas",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 18,
+   "share_pct": 21.2
+  },
+  {
+   "skill": "Pandas",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 27,
+   "share_pct": 24.5
+  },
+  {
+   "skill": "Pandas",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 11,
+   "share_pct": 25.0
+  },
+  {
+   "skill": "Pandas",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 41,
+   "share_pct": 29.7
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 10,
+   "share_pct": 20.0
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 22,
+   "share_pct": 40.7
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 9,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 115,
+   "share_pct": 32.6
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 25,
+   "share_pct": 29.4
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 37,
+   "share_pct": 33.6
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 14,
+   "share_pct": 31.8
+  },
+  {
+   "skill": "PostgreSQL",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 40,
+   "share_pct": 29.0
+  },
+  {
+   "skill": "Power BI",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 12,
+   "share_pct": 24.0
+  },
+  {
+   "skill": "Power BI",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 12,
+   "share_pct": 22.2
+  },
+  {
+   "skill": "Power BI",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 7,
+   "share_pct": 21.2
+  },
+  {
+   "skill": "Power BI",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 91,
+   "share_pct": 25.8
+  },
+  {
+   "skill": "Power BI",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 13,
+   "share_pct": 15.3
+  },
+  {
+   "skill": "Power BI",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 30,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "Power BI",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 13,
+   "share_pct": 29.5
+  },
+  {
+   "skill": "Power BI",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 30,
+   "share_pct": 21.7
+  },
+  {
+   "skill": "Python",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 19,
+   "share_pct": 38.0
+  },
+  {
+   "skill": "Python",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 19,
+   "share_pct": 35.2
+  },
+  {
+   "skill": "Python",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 14,
+   "share_pct": 42.4
+  },
+  {
+   "skill": "Python",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 153,
+   "share_pct": 43.3
+  },
+  {
+   "skill": "Python",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 30,
+   "share_pct": 35.3
+  },
+  {
+   "skill": "Python",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 50,
+   "share_pct": 45.5
+  },
+  {
+   "skill": "Python",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 17,
+   "share_pct": 38.6
+  },
+  {
+   "skill": "Python",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 62,
+   "share_pct": 44.9
+  },
+  {
+   "skill": "REST API",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 14,
+   "share_pct": 28.0
+  },
+  {
+   "skill": "REST API",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 20,
+   "share_pct": 37.0
+  },
+  {
+   "skill": "REST API",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 10,
+   "share_pct": 30.3
+  },
+  {
+   "skill": "REST API",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 100,
+   "share_pct": 28.3
+  },
+  {
+   "skill": "REST API",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 32,
+   "share_pct": 37.6
+  },
+  {
+   "skill": "REST API",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 30,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "REST API",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 15,
+   "share_pct": 34.1
+  },
+  {
+   "skill": "REST API",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 34,
+   "share_pct": 24.6
+  },
+  {
+   "skill": "SQL",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 34,
+   "share_pct": 68.0
+  },
+  {
+   "skill": "SQL",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 39,
+   "share_pct": 72.2
+  },
+  {
+   "skill": "SQL",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 20,
+   "share_pct": 60.6
+  },
+  {
+   "skill": "SQL",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 260,
+   "share_pct": 73.7
+  },
+  {
+   "skill": "SQL",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 49,
+   "share_pct": 57.6
+  },
+  {
+   "skill": "SQL",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 84,
+   "share_pct": 76.4
+  },
+  {
+   "skill": "SQL",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 33,
+   "share_pct": 75.0
+  },
+  {
+   "skill": "SQL",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 90,
+   "share_pct": 65.2
+  },
+  {
+   "skill": "UML",
+   "city": "Алматы",
+   "n_vacancies": 50,
+   "mentions": 10,
+   "share_pct": 20.0
+  },
+  {
+   "skill": "UML",
+   "city": "Екатеринбург",
+   "n_vacancies": 54,
+   "mentions": 14,
+   "share_pct": 25.9
+  },
+  {
+   "skill": "UML",
+   "city": "Казань",
+   "n_vacancies": 33,
+   "mentions": 9,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "UML",
+   "city": "Москва",
+   "n_vacancies": 353,
+   "mentions": 86,
+   "share_pct": 24.4
+  },
+  {
+   "skill": "UML",
+   "city": "Новосибирск",
+   "n_vacancies": 85,
+   "mentions": 29,
+   "share_pct": 34.1
+  },
+  {
+   "skill": "UML",
+   "city": "Томск",
+   "n_vacancies": 110,
+   "mentions": 24,
+   "share_pct": 21.8
+  },
+  {
+   "skill": "UML",
+   "city": "Нижний Новгород",
+   "n_vacancies": 44,
+   "mentions": 12,
+   "share_pct": 27.3
+  },
+  {
+   "skill": "UML",
+   "city": "Санкт-Петербург",
+   "n_vacancies": 138,
+   "mentions": 33,
+   "share_pct": 23.9
+  }
+ ],
+ "q2_salary_median_by_month": [
+  {
+   "month": "2026-03-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 11,
+   "median_salary": 87500.0,
+   "avg_salary": 88327
+  },
+  {
+   "month": "2026-04-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 14,
+   "median_salary": 74975.0,
+   "avg_salary": 80140
+  },
+  {
+   "month": "2026-05-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 11,
+   "median_salary": 91350.0,
+   "avg_salary": 89502
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 26,
+   "median_salary": 79150.0,
+   "avg_salary": 85243
+  },
+  {
+   "month": "2026-07-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 16,
+   "median_salary": 85000.0,
+   "avg_salary": 85659
+  },
+  {
+   "month": "2026-08-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 9,
+   "median_salary": 77500.0,
+   "avg_salary": 76856
+  },
+  {
+   "month": "2026-09-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 17,
+   "median_salary": 80000.0,
+   "avg_salary": 84799
+  },
+  {
+   "month": "2026-10-01",
+   "role": "backend_junior",
+   "city": "Все города",
+   "n_with_salary": 17,
+   "median_salary": 80000.0,
+   "avg_salary": 83962
+  },
+  {
+   "month": "2026-03-01",
+   "role": "backend_junior",
+   "city": "Алматы",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 68225
+  },
+  {
+   "month": "2026-04-01",
+   "role": "backend_junior",
+   "city": "Алматы",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 57638
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Алматы",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 71975
+  },
+  {
+   "month": "2026-07-01",
+   "role": "backend_junior",
+   "city": "Алматы",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 69600
+  },
+  {
+   "month": "2026-08-01",
+   "role": "backend_junior",
+   "city": "Алматы",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 80000
+  },
+  {
+   "month": "2026-09-01",
+   "role": "backend_junior",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 67183
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Екатеринбург",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 80400
+  },
+  {
+   "month": "2026-09-01",
+   "role": "backend_junior",
+   "city": "Екатеринбург",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 69600
+  },
+  {
+   "month": "2026-10-01",
+   "role": "backend_junior",
+   "city": "Екатеринбург",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 60000
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Казань",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 45000
+  },
+  {
+   "month": "2026-07-01",
+   "role": "backend_junior",
+   "city": "Казань",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 54375
+  },
+  {
+   "month": "2026-03-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 7,
+   "median_salary": 95000.0,
+   "avg_salary": 94664
+  },
+  {
+   "month": "2026-04-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 7,
+   "median_salary": 80000.0,
+   "avg_salary": 91989
+  },
+  {
+   "month": "2026-05-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 8,
+   "median_salary": 91675.0,
+   "avg_salary": 92131
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 14,
+   "median_salary": 80000.0,
+   "avg_salary": 92489
+  },
+  {
+   "month": "2026-07-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 9,
+   "median_salary": 104400.0,
+   "avg_salary": 97467
+  },
+  {
+   "month": "2026-08-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 100017
+  },
+  {
+   "month": "2026-09-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 6,
+   "median_salary": 99676.0,
+   "avg_salary": 104267
+  },
+  {
+   "month": "2026-10-01",
+   "role": "backend_junior",
+   "city": "Москва",
+   "n_with_salary": 11,
+   "median_salary": 82650.0,
+   "avg_salary": 90691
+  },
+  {
+   "month": "2026-04-01",
+   "role": "backend_junior",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 95000
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 92500
+  },
+  {
+   "month": "2026-10-01",
+   "role": "backend_junior",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 60000
+  },
+  {
+   "month": "2026-03-01",
+   "role": "backend_junior",
+   "city": "Томск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 62500
+  },
+  {
+   "month": "2026-04-01",
+   "role": "backend_junior",
+   "city": "Томск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 70000
+  },
+  {
+   "month": "2026-07-01",
+   "role": "backend_junior",
+   "city": "Томск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 72500
+  },
+  {
+   "month": "2026-08-01",
+   "role": "backend_junior",
+   "city": "Томск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 63075
+  },
+  {
+   "month": "2026-10-01",
+   "role": "backend_junior",
+   "city": "Томск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 47850
+  },
+  {
+   "month": "2026-09-01",
+   "role": "backend_junior",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 50000
+  },
+  {
+   "month": "2026-03-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 110000
+  },
+  {
+   "month": "2026-04-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 65921
+  },
+  {
+   "month": "2026-05-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 82492
+  },
+  {
+   "month": "2026-06-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 6,
+   "median_salary": 78062.0,
+   "avg_salary": 79871
+  },
+  {
+   "month": "2026-07-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 85000
+  },
+  {
+   "month": "2026-08-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 61213
+  },
+  {
+   "month": "2026-09-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 6,
+   "median_salary": 82412.0,
+   "avg_salary": 82471
+  },
+  {
+   "month": "2026-10-01",
+   "role": "backend_junior",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 87300
+  },
+  {
+   "month": "2026-03-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 23,
+   "median_salary": 160950.0,
+   "avg_salary": 178163
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 29,
+   "median_salary": 200100.0,
+   "avg_salary": 211343
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 37,
+   "median_salary": 189225.0,
+   "avg_salary": 196596
+  },
+  {
+   "month": "2026-06-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 29,
+   "median_salary": 182500.0,
+   "avg_salary": 183547
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 31,
+   "median_salary": 165300.0,
+   "avg_salary": 187801
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 25,
+   "median_salary": 165300.0,
+   "avg_salary": 180710
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 31,
+   "median_salary": 175000.0,
+   "avg_salary": 207294
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Все города",
+   "n_with_salary": 31,
+   "median_salary": 189225.0,
+   "avg_salary": 205631
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Алматы",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 155000
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Алматы",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 73950
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 209458
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Алматы",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 84825
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 140983
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 208700
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 156600
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 145000
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 202275
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 185000
+  },
+  {
+   "month": "2026-03-01",
+   "role": "data_analyst",
+   "city": "Казань",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 112417
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Казань",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 130500
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Казань",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 152500
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Казань",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 230000
+  },
+  {
+   "month": "2026-03-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 14,
+   "median_salary": 176675.0,
+   "avg_salary": 192786
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 17,
+   "median_salary": 226200.0,
+   "avg_salary": 240940
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 21,
+   "median_salary": 208800.0,
+   "avg_salary": 223977
+  },
+  {
+   "month": "2026-06-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 21,
+   "median_salary": 192500.0,
+   "avg_salary": 195763
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 9,
+   "median_salary": 215000.0,
+   "avg_salary": 236944
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 12,
+   "median_salary": 192500.0,
+   "avg_salary": 208913
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 15,
+   "median_salary": 270000.0,
+   "avg_salary": 251612
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Москва",
+   "n_with_salary": 11,
+   "median_salary": 235000.0,
+   "avg_salary": 256927
+  },
+  {
+   "month": "2026-03-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 144275
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 172500
+  },
+  {
+   "month": "2026-06-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 130533
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 167500
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 160000
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 120558
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 143550
+  },
+  {
+   "month": "2026-03-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 72500
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 163125
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 4,
+   "median_salary": null,
+   "avg_salary": 175800
+  },
+  {
+   "month": "2026-06-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 177500
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 7,
+   "median_salary": 165300.0,
+   "avg_salary": 162900
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 5,
+   "median_salary": 140000.0,
+   "avg_salary": 126295
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Томск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 133183
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 132675
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 140000
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 142500
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 139200
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 131013
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 143838
+  },
+  {
+   "month": "2026-03-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 233483
+  },
+  {
+   "month": "2026-04-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 6,
+   "median_salary": 176025.0,
+   "avg_salary": 181925
+  },
+  {
+   "month": "2026-05-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 8,
+   "median_salary": 155038.0,
+   "avg_salary": 174047
+  },
+  {
+   "month": "2026-06-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 155083
+  },
+  {
+   "month": "2026-07-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 5,
+   "median_salary": 130500.0,
+   "avg_salary": 166990
+  },
+  {
+   "month": "2026-08-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 230100
+  },
+  {
+   "month": "2026-09-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 5,
+   "median_salary": 160950.0,
+   "avg_salary": 199690
+  },
+  {
+   "month": "2026-10-01",
+   "role": "data_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 9,
+   "median_salary": 180000.0,
+   "avg_salary": 186276
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 39,
+   "median_salary": 182700.0,
+   "avg_salary": 196822
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 45,
+   "median_salary": 185278.0,
+   "avg_salary": 201383
+  },
+  {
+   "month": "2026-05-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 23,
+   "median_salary": 222500.0,
+   "avg_salary": 237572
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 46,
+   "median_salary": 190700.0,
+   "avg_salary": 195870
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 30,
+   "median_salary": 183088.0,
+   "avg_salary": 188359
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 34,
+   "median_salary": 246250.0,
+   "avg_salary": 236384
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 43,
+   "median_salary": 182700.0,
+   "avg_salary": 197396
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Все города",
+   "n_with_salary": 45,
+   "median_salary": 193575.0,
+   "avg_salary": 220096
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 236225
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 156667
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 200208
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 195642
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 175350
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 210000
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Алматы",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 180588
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 150525
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 4,
+   "median_salary": null,
+   "avg_salary": 140150
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 192488
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 6,
+   "median_salary": 151775.0,
+   "avg_salary": 147400
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Екатеринбург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 216308
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Казань",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 154117
+  },
+  {
+   "month": "2026-05-01",
+   "role": "system_analyst",
+   "city": "Казань",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 202275
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Казань",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 137500
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Казань",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 163125
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 15,
+   "median_salary": 239250.0,
+   "avg_salary": 249875
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 22,
+   "median_salary": 232500.0,
+   "avg_salary": 228809
+  },
+  {
+   "month": "2026-05-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 13,
+   "median_salary": 227500.0,
+   "avg_salary": 272163
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 26,
+   "median_salary": 210650.0,
+   "avg_salary": 211314
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 9,
+   "median_salary": 200100.0,
+   "avg_salary": 203792
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 19,
+   "median_salary": 291450.0,
+   "avg_salary": 267319
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 17,
+   "median_salary": 210000.0,
+   "avg_salary": 228716
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Москва",
+   "n_with_salary": 20,
+   "median_salary": 246800.0,
+   "avg_salary": 253783
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 4,
+   "median_salary": null,
+   "avg_salary": 168338
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 252300
+  },
+  {
+   "month": "2026-05-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 174900
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 6,
+   "median_salary": 111225.0,
+   "avg_salary": 138488
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 160588
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 326250
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 8,
+   "median_salary": 215000.0,
+   "avg_salary": 205000
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Новосибирск",
+   "n_with_salary": 5,
+   "median_salary": 170000.0,
+   "avg_salary": 178220
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 148750
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 108750
+  },
+  {
+   "month": "2026-05-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 4,
+   "median_salary": null,
+   "avg_salary": 179800
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 145333
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 183800
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 5,
+   "median_salary": 165000.0,
+   "avg_salary": 153645
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 111000
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Томск",
+   "n_with_salary": 5,
+   "median_salary": 195750.0,
+   "avg_salary": 197605
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 8,
+   "median_salary": 139600.0,
+   "avg_salary": 151391
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 93725
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 90000
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 234900
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 185000
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 1,
+   "median_salary": null,
+   "avg_salary": 95000
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Нижний Новгород",
+   "n_with_salary": 2,
+   "median_salary": null,
+   "avg_salary": 127113
+  },
+  {
+   "month": "2026-03-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 4,
+   "median_salary": null,
+   "avg_salary": 165606
+  },
+  {
+   "month": "2026-04-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 15,
+   "median_salary": 185000.0,
+   "avg_salary": 193413
+  },
+  {
+   "month": "2026-05-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 218250
+  },
+  {
+   "month": "2026-06-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 5,
+   "median_salary": 213150.0,
+   "avg_salary": 251450
+  },
+  {
+   "month": "2026-07-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 5,
+   "median_salary": 210000.0,
+   "avg_salary": 210350
+  },
+  {
+   "month": "2026-08-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 3,
+   "median_salary": null,
+   "avg_salary": 255833
+  },
+  {
+   "month": "2026-09-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 8,
+   "median_salary": 196250.0,
+   "avg_salary": 193556
+  },
+  {
+   "month": "2026-10-01",
+   "role": "system_analyst",
+   "city": "Санкт-Петербург",
+   "n_with_salary": 6,
+   "median_salary": 178350.0,
+   "avg_salary": 226492
+  }
+ ],
+ "q3_employers_activity": [
+  {
+   "employer": "Неон Маркетплейс",
+   "vacancies": 110,
+   "updates": 64.0,
+   "updates_per_vacancy": 0.58,
+   "pct_updated": 36.4,
+   "salary_changes": 12.0,
+   "name_changes": 12.0,
+   "avg_days_between_updates": 17.1
+  },
+  {
+   "employer": "Северный Банк",
+   "vacancies": 93,
+   "updates": 64.0,
+   "updates_per_vacancy": 0.69,
+   "pct_updated": 39.8,
+   "salary_changes": 12.0,
+   "name_changes": 11.0,
+   "avg_days_between_updates": 13.7
+  },
+  {
+   "employer": "СибирьСофт",
+   "vacancies": 79,
+   "updates": 64.0,
+   "updates_per_vacancy": 0.81,
+   "pct_updated": 46.8,
+   "salary_changes": 19.0,
+   "name_changes": 7.0,
+   "avg_days_between_updates": 13.2
+  },
+  {
+   "employer": "Ритейл Плюс",
+   "vacancies": 75,
+   "updates": 46.0,
+   "updates_per_vacancy": 0.61,
+   "pct_updated": 38.7,
+   "salary_changes": 17.0,
+   "name_changes": 4.0,
+   "avg_days_between_updates": 15.1
+  },
+  {
+   "employer": "ОблакоТех",
+   "vacancies": 73,
+   "updates": 36.0,
+   "updates_per_vacancy": 0.49,
+   "pct_updated": 30.1,
+   "salary_changes": 8.0,
+   "name_changes": 4.0,
+   "avg_days_between_updates": 15.0
+  },
+  {
+   "employer": "ДатаФабрика",
+   "vacancies": 61,
+   "updates": 52.0,
+   "updates_per_vacancy": 0.85,
+   "pct_updated": 54.1,
+   "salary_changes": 18.0,
+   "name_changes": 9.0,
+   "avg_days_between_updates": 17.9
+  },
+  {
+   "employer": "ЕдаДоставка",
+   "vacancies": 53,
+   "updates": 30.0,
+   "updates_per_vacancy": 0.57,
+   "pct_updated": 35.8,
+   "salary_changes": 6.0,
+   "name_changes": 4.0,
+   "avg_days_between_updates": 12.5
+  },
+  {
+   "employer": "АйТи Аутсорс",
+   "vacancies": 53,
+   "updates": 34.0,
+   "updates_per_vacancy": 0.64,
+   "pct_updated": 45.3,
+   "salary_changes": 9.0,
+   "name_changes": 5.0,
+   "avg_days_between_updates": 20.2
+  },
+  {
+   "employer": "Медсистемы",
+   "vacancies": 44,
+   "updates": 29.0,
+   "updates_per_vacancy": 0.66,
+   "pct_updated": 34.1,
+   "salary_changes": 6.0,
+   "name_changes": 4.0,
+   "avg_days_between_updates": 14.7
+  },
+  {
+   "employer": "Степь Диджитал",
+   "vacancies": 44,
+   "updates": 32.0,
+   "updates_per_vacancy": 0.73,
+   "pct_updated": 43.2,
+   "salary_changes": 12.0,
+   "name_changes": 2.0,
+   "avg_days_between_updates": 15.7
+  },
+  {
+   "employer": "ФинТехЛаб",
+   "vacancies": 37,
+   "updates": 11.0,
+   "updates_per_vacancy": 0.3,
+   "pct_updated": 24.3,
+   "salary_changes": 1.0,
+   "name_changes": 1.0,
+   "avg_days_between_updates": 20.1
+  },
+  {
+   "employer": "ГосИнформ",
+   "vacancies": 34,
+   "updates": 24.0,
+   "updates_per_vacancy": 0.71,
+   "pct_updated": 44.1,
+   "salary_changes": 8.0,
+   "name_changes": 3.0,
+   "avg_days_between_updates": 13.4
+  },
+  {
+   "employer": "ТомДата",
+   "vacancies": 34,
+   "updates": 22.0,
+   "updates_per_vacancy": 0.65,
+   "pct_updated": 44.1,
+   "salary_changes": 4.0,
+   "name_changes": 3.0,
+   "avg_days_between_updates": 17.6
+  },
+  {
+   "employer": "Логистика 24",
+   "vacancies": 33,
+   "updates": 17.0,
+   "updates_per_vacancy": 0.52,
+   "pct_updated": 36.4,
+   "salary_changes": 6.0,
+   "name_changes": 4.0,
+   "avg_days_between_updates": 14.0
+  },
+  {
+   "employer": "Волга ИТ",
+   "vacancies": 32,
+   "updates": 18.0,
+   "updates_per_vacancy": 0.56,
+   "pct_updated": 37.5,
+   "salary_changes": 3.0,
+   "name_changes": 3.0,
+   "avg_days_between_updates": 20.9
+  }
+ ],
+ "q4_no_salary_by_region": [
+  {
+   "city": "Томск",
+   "vacancies": 142,
+   "without_salary": 70,
+   "pct_without_salary": 49.3
+  },
+  {
+   "city": "Екатеринбург",
+   "vacancies": 75,
+   "without_salary": 35,
+   "pct_without_salary": 46.7
+  },
+  {
+   "city": "Новосибирск",
+   "vacancies": 110,
+   "without_salary": 49,
+   "pct_without_salary": 44.5
+  },
+  {
+   "city": "Нижний Новгород",
+   "vacancies": 51,
+   "without_salary": 21,
+   "pct_without_salary": 41.2
+  },
+  {
+   "city": "Казань",
+   "vacancies": 41,
+   "without_salary": 16,
+   "pct_without_salary": 39.0
+  },
+  {
+   "city": "Алматы",
+   "vacancies": 73,
+   "without_salary": 22,
+   "pct_without_salary": 30.1
+  },
+  {
+   "city": "Санкт-Петербург",
+   "vacancies": 192,
+   "without_salary": 56,
+   "pct_without_salary": 29.2
+  },
+  {
+   "city": "Москва",
+   "vacancies": 478,
+   "without_salary": 114,
+   "pct_without_salary": 23.8
+  },
+  {
+   "city": "Все города",
+   "vacancies": 1162,
+   "without_salary": 383,
+   "pct_without_salary": 33.0
+  }
+ ],
+ "q5_new_last_7_days": [
+  {
+   "hh_id": "102009898",
+   "name": "Аналитик данных 1С",
+   "employer": "Северный Банк",
+   "city": "Москва",
+   "role": "other",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": null,
+   "possible_duplicate_of": "102017863"
+  },
+  {
+   "hh_id": "102036759",
+   "name": "Ведущий системный аналитик",
+   "employer": "Ритейл Плюс",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": null,
+   "possible_duplicate_of": "102041585"
+  },
+  {
+   "hh_id": "102115854",
+   "name": "BI-аналитик",
+   "employer": "Медсистемы",
+   "city": "Новосибирск",
+   "role": "data_analyst",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": 143550.0,
+   "possible_duplicate_of": "102118016"
+  },
+  {
+   "hh_id": "102186563",
+   "name": "Junior системный аналитик",
+   "employer": "Неон Маркетплейс",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": 193575.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102191387",
+   "name": "Системный аналитик (Middle)",
+   "employer": "Неон Маркетплейс",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": 335000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102269903",
+   "name": "System Analyst",
+   "employer": "ЕдаДоставка",
+   "city": "Санкт-Петербург",
+   "role": "system_analyst",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": 178350.0,
+   "possible_duplicate_of": "102267686"
+  },
+  {
+   "hh_id": "102325133",
+   "name": "Junior аналитик данных",
+   "employer": "Аноним",
+   "city": "Санкт-Петербург",
+   "role": "data_analyst",
+   "first_seen": "2026-10-30",
+   "salary_rub_net": 121800.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "101982780",
+   "name": "Junior Backend Developer (Python)",
+   "employer": "СибирьСофт",
+   "city": "Томск",
+   "role": "backend_junior",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": 47850.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102074194",
+   "name": "Аналитик данных 1С",
+   "employer": "ОблакоТех",
+   "city": "Санкт-Петербург",
+   "role": "other",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": 126150.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102145446",
+   "name": "Junior аналитик данных",
+   "employer": "ФинТехЛаб",
+   "city": "Москва",
+   "role": "data_analyst",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102163862",
+   "name": "Аналитик данных (SQL, Python)",
+   "employer": "Волга ИТ",
+   "city": "Нижний Новгород",
+   "role": "data_analyst",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": 155000.0,
+   "possible_duplicate_of": "102159512"
+  },
+  {
+   "hh_id": "102179274",
+   "name": "Системный аналитик (Middle)",
+   "employer": "Неон Маркетплейс",
+   "city": "Новосибирск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": 202500.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102286589",
+   "name": "Junior системный аналитик",
+   "employer": "КиберЗащита",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": null,
+   "possible_duplicate_of": "102281254"
+  },
+  {
+   "hh_id": "102294028",
+   "name": "Продуктовый аналитик (Data Analyst)",
+   "employer": "Мобильные Решения",
+   "city": "Санкт-Петербург",
+   "role": "data_analyst",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102302342",
+   "name": "Аналитик данных (SQL, Python)",
+   "employer": "АйТи Аутсорс",
+   "city": "Москва",
+   "role": "data_analyst",
+   "first_seen": "2026-10-29",
+   "salary_rub_net": 180000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "101972560",
+   "name": "Системный аналитик",
+   "employer": "СибирьСофт",
+   "city": "Томск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-28",
+   "salary_rub_net": 174000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "101975692",
+   "name": "Data Analyst",
+   "employer": "СибирьСофт",
+   "city": "Томск",
+   "role": "data_analyst",
+   "first_seen": "2026-10-28",
+   "salary_rub_net": null,
+   "possible_duplicate_of": "101978759"
+  },
+  {
+   "hh_id": "102016019",
+   "name": "Системный аналитик",
+   "employer": "Северный Банк",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-28",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102211247",
+   "name": "System Analyst",
+   "employer": "ТГУ Технопарк",
+   "city": "Томск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-28",
+   "salary_rub_net": null,
+   "possible_duplicate_of": "102210352"
+  },
+  {
+   "hh_id": "102251972",
+   "name": "Junior системный аналитик",
+   "employer": "Код Сибири",
+   "city": "Новосибирск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-28",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102277257",
+   "name": "Тестировщик / системный аналитик (стажёр)",
+   "employer": "Образование 2.0",
+   "city": "Казань",
+   "role": "other",
+   "first_seen": "2026-10-28",
+   "salary_rub_net": 56550.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102041585",
+   "name": "Ведущий системный аналитик",
+   "employer": "Ритейл Плюс",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": 305000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102046062",
+   "name": "Руководитель группы системных аналитиков",
+   "employer": "ОблакоТех",
+   "city": "Санкт-Петербург",
+   "role": "other",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": 270000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102086495",
+   "name": "Тестировщик / системный аналитик (стажёр)",
+   "employer": "Логистика 24",
+   "city": "Екатеринбург",
+   "role": "other",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": 58725.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102118016",
+   "name": "BI-аналитик",
+   "employer": "Медсистемы",
+   "city": "Новосибирск",
+   "role": "data_analyst",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102125754",
+   "name": "Продуктовый аналитик (Data Analyst)",
+   "employer": "ФинТехЛаб",
+   "city": "Москва",
+   "role": "data_analyst",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102174306",
+   "name": "Системный аналитик",
+   "employer": "АлмаФинанс",
+   "city": "Алматы",
+   "role": "system_analyst",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102226300",
+   "name": "Системный аналитик",
+   "employer": "ТГУ Технопарк",
+   "city": "Томск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-27",
+   "salary_rub_net": 237075.0,
+   "possible_duplicate_of": "102220437"
+  },
+  {
+   "hh_id": "102013642",
+   "name": "Продуктовый аналитик (Data Analyst)",
+   "employer": "Северный Банк",
+   "city": "Москва",
+   "role": "data_analyst",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": 312500.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102190528",
+   "name": "Junior системный аналитик",
+   "employer": "Неон Маркетплейс",
+   "city": "Новосибирск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": 120000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102197366",
+   "name": "Аналитик данных (SQL, Python)",
+   "employer": "Неон Маркетплейс",
+   "city": "Москва",
+   "role": "data_analyst",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": 190000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102207993",
+   "name": "Аналитик данных 1С",
+   "employer": "Неон Маркетплейс",
+   "city": "Москва",
+   "role": "other",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": 147500.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102267686",
+   "name": "System Analyst",
+   "employer": "ЕдаДоставка",
+   "city": "Санкт-Петербург",
+   "role": "system_analyst",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": 178350.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102304454",
+   "name": "System Analyst",
+   "employer": "АйТи Аутсорс",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102319966",
+   "name": "Аналитик данных",
+   "employer": "Аноним",
+   "city": "Москва",
+   "role": "data_analyst",
+   "first_seen": "2026-10-26",
+   "salary_rub_net": 145000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102105396",
+   "name": "BI-аналитик",
+   "employer": "Логистика 24",
+   "city": "Екатеринбург",
+   "role": "data_analyst",
+   "first_seen": "2026-10-25",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102113848",
+   "name": "Стажёр-разработчик Python",
+   "employer": "Медсистемы",
+   "city": "Новосибирск",
+   "role": "backend_junior",
+   "first_seen": "2026-10-24",
+   "salary_rub_net": 60000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102223839",
+   "name": "Системный аналитик",
+   "employer": "ТГУ Технопарк",
+   "city": "Томск",
+   "role": "system_analyst",
+   "first_seen": "2026-10-24",
+   "salary_rub_net": 226200.0,
+   "possible_duplicate_of": "102217444"
+  },
+  {
+   "hh_id": "102246215",
+   "name": "System Analyst",
+   "employer": "ДатаФабрика",
+   "city": "Москва",
+   "role": "system_analyst",
+   "first_seen": "2026-10-24",
+   "salary_rub_net": 190000.0,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102255040",
+   "name": "Junior системный аналитик",
+   "employer": "Урал Софт",
+   "city": "Екатеринбург",
+   "role": "system_analyst",
+   "first_seen": "2026-10-24",
+   "salary_rub_net": null,
+   "possible_duplicate_of": null
+  },
+  {
+   "hh_id": "102292329",
+   "name": "Системный аналитик",
+   "employer": "Мобильные Решения",
+   "city": "Санкт-Петербург",
+   "role": "system_analyst",
+   "first_seen": "2026-10-24",
+   "salary_rub_net": 305000.0,
+   "possible_duplicate_of": null
+  }
+ ],
+ "q6_stable_employers": [
+  {
+   "employer": "ДатаФабрика",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 8,
+   "active_months_total": 8
+  },
+  {
+   "employer": "СибирьСофт",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 8,
+   "active_months_total": 8
+  },
+  {
+   "employer": "АйТи Аутсорс",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 8,
+   "active_months_total": 8
+  },
+  {
+   "employer": "Неон Маркетплейс",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 8,
+   "active_months_total": 8
+  },
+  {
+   "employer": "ОблакоТех",
+   "streak_start": "2026-04-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 7,
+   "active_months_total": 7
+  },
+  {
+   "employer": "ЕдаДоставка",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-07-01",
+   "streak_months": 5,
+   "active_months_total": 7
+  },
+  {
+   "employer": "Волга ИТ",
+   "streak_start": "2026-06-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 5,
+   "active_months_total": 7
+  },
+  {
+   "employer": "Код Сибири",
+   "streak_start": "2026-06-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 5,
+   "active_months_total": 7
+  },
+  {
+   "employer": "Северный Банк",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-07-01",
+   "streak_months": 5,
+   "active_months_total": 7
+  },
+  {
+   "employer": "Степь Диджитал",
+   "streak_start": "2026-05-01",
+   "streak_end": "2026-09-01",
+   "streak_months": 5,
+   "active_months_total": 6
+  },
+  {
+   "employer": "ТГУ Технопарк",
+   "streak_start": "2026-06-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 5,
+   "active_months_total": 5
+  },
+  {
+   "employer": "ГосИнформ",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-06-01",
+   "streak_months": 4,
+   "active_months_total": 4
+  },
+  {
+   "employer": "Медсистемы",
+   "streak_start": "2026-04-01",
+   "streak_end": "2026-07-01",
+   "streak_months": 4,
+   "active_months_total": 6
+  },
+  {
+   "employer": "Ритейл Плюс",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-06-01",
+   "streak_months": 4,
+   "active_months_total": 7
+  },
+  {
+   "employer": "Урал Софт",
+   "streak_start": "2026-07-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 4,
+   "active_months_total": 4
+  },
+  {
+   "employer": "КиберЗащита",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-05-01",
+   "streak_months": 3,
+   "active_months_total": 6
+  },
+  {
+   "employer": "КиберЗащита",
+   "streak_start": "2026-08-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 3,
+   "active_months_total": 6
+  },
+  {
+   "employer": "ТомДата",
+   "streak_start": "2026-03-01",
+   "streak_end": "2026-05-01",
+   "streak_months": 3,
+   "active_months_total": 5
+  },
+  {
+   "employer": "Ритейл Плюс",
+   "streak_start": "2026-08-01",
+   "streak_end": "2026-10-01",
+   "streak_months": 3,
+   "active_months_total": 7
+  },
+  {
+   "employer": "Страхование Онлайн",
+   "streak_start": "2026-06-01",
+   "streak_end": "2026-08-01",
+   "streak_months": 3,
+   "active_months_total": 4
+  },
+  {
+   "employer": "ЭнергоСбыт Онлайн",
+   "streak_start": "2026-07-01",
+   "streak_end": "2026-09-01",
+   "streak_months": 3,
+   "active_months_total": 3
+  },
+  {
+   "employer": "Логистика 24",
+   "streak_start": "2026-06-01",
+   "streak_end": "2026-08-01",
+   "streak_months": 3,
+   "active_months_total": 4
+  }
+ ],
+ "q4_ci": [
+  {
+   "city": "Москва",
+   "ci_low": 20.2,
+   "ci_high": 27.9
+  },
+  {
+   "city": "Санкт-Петербург",
+   "ci_low": 23.2,
+   "ci_high": 36.0
+  },
+  {
+   "city": "Алматы",
+   "ci_low": 20.8,
+   "ci_high": 41.4
+  },
+  {
+   "city": "Казань",
+   "ci_low": 25.7,
+   "ci_high": 54.3
+  },
+  {
+   "city": "Нижний Новгород",
+   "ci_low": 28.8,
+   "ci_high": 54.8
+  },
+  {
+   "city": "Новосибирск",
+   "ci_low": 35.6,
+   "ci_high": 53.9
+  },
+  {
+   "city": "Екатеринбург",
+   "ci_low": 35.8,
+   "ci_high": 57.8
+  },
+  {
+   "city": "Томск",
+   "ci_low": 41.2,
+   "ci_high": 57.4
+  }
+ ]
+};
