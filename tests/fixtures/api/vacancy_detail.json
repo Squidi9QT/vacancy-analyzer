@@ -1,0 +1,17 @@
+{
+  "id": "104857600",
+  "name": "  Системный аналитик (Middle) ",
+  "area": {"id": "90", "name": "Томск", "url": "https://api.hh.ru/areas/90"},
+  "salary": {"from": 100000, "to": 140000, "currency": "RUR", "gross": true},
+  "salary_range": {"from": 120000, "to": 160000, "currency": "RUR", "gross": false,
+                   "mode": {"id": "MONTH", "name": "За месяц"}},
+  "experience": {"id": "between1And3", "name": "От 1 года до 3 лет"},
+  "schedule": {"id": "remote", "name": "Удаленная работа"},
+  "employer": {"id": "10000", "name": "СибирьСофт", "trusted": true},
+  "key_skills": [{"name": "SQL"}, {"name": "sql "}, {"name": "Postgres"}, {"name": "BPMN"}, {"name": "  "}],
+  "created_at": "2026-10-20T10:15:00+0300",
+  "published_at": "2026-10-25T09:00:00+0300",
+  "archived": false,
+  "alternate_url": "https://hh.ru/vacancy/104857600",
+  "description": "<p>Ищем системного аналитика</p>"
+}
