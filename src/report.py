@@ -129,7 +129,7 @@ def chart_salary_trend(df: pd.DataFrame, path: Path) -> None:
     ax.legend(frameon=False, fontsize=8, loc="lower left", labelcolor=INK_2)
     _style(ax, "Медианная зарплата по месяцам публикации",
            "Зарплата первой версии вакансии в ₽ на руки, все города. Ось Y от нуля.\n"
-           "Каждая точка — медиана 9–60 вакансий: колебания ±10 % между месяцами — шум, а не тренд")
+           "Каждая точка — медиана 9–46 вакансий: колебания ±10 % между месяцами — шум, а не тренд")
     fig.subplots_adjust(top=0.82, left=0.08, right=0.97, bottom=0.1)
     fig.savefig(path, dpi=150)
     plt.close(fig)
@@ -225,7 +225,8 @@ def build_report(database_url: str) -> None:
             log.warning("В базе нет вакансий — сначала запустите: python -m src.main load --days 7")
             return
         meta = conn.execute(
-            """SELECT max(as_of)::text, count(*), (SELECT count(*) FROM vacancy_snapshot),
+            # to_char в московском времени: ::text выдал бы время в поясе сессии (+07 на машине разработки)
+            """SELECT to_char(max(as_of) AT TIME ZONE 'Europe/Moscow', 'YYYY-MM-DD HH24:MI "МСК"'), count(*), (SELECT count(*) FROM vacancy_snapshot),
                       (SELECT count(*) FROM employer), (SELECT count(*) FROM skill)
                FROM load_run WHERE status = 'success'""").fetchone()
         names = ["q1_top_skills", "q1b_skills_by_city", "q2_salary_median_by_month", "q3_employers_activity",
@@ -248,6 +249,6 @@ def build_report(database_url: str) -> None:
     EXPLAINER_DATA.write_text(
         "// Сгенерировано командой `python -m src.main report`. Не редактировать вручную.\n"
         "// Обычный <script>, а не fetch('data.json'): так сайт работает при открытии файла без сервера.\n"
-        f"window.REPORT_DATA = {json.dumps(payload, ensure_ascii=False, indent=1)};\n",
+        f"window.REPORT_DATA = {json.dumps(payload, ensure_ascii=False)};\n",
         encoding="utf-8")
     log.info("Отчёт готов: %s (графики и CSV), %s", REPORTS, EXPLAINER_DATA)

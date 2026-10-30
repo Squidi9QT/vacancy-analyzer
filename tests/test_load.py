@@ -136,7 +136,7 @@ def test_older_data_does_not_overwrite_newer(db, load_json):
 
 
 def test_sql_injection_in_name_is_stored_as_text(db, load_json):
-    """Параметризованный запрос: «вредное» название — просто текст."""
+    """Параметризованный запрос: «вредное» название сохраняется как обычный текст."""
     detail = load_json("vacancy_detail.json") | {"name": "Аналитик'); DROP TABLE vacancy; --"}
     db.execute("INSERT INTO currency VALUES ('RUR', 'Рубли', 1)")
     run_id = repo.start_run(db, AS_OF, "fixtures", {})

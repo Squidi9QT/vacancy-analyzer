@@ -9,6 +9,7 @@ pandas==3.1.0
 matplotlib==3.11.2
 # Тесты
 pytest==9.2.0
-# Опционально: эндпоинт /api/summary
+# Опционально: эндпоинт /api/summary (для запуска сервера ещё нужен uvicorn)
 fastapi==0.162.0
 httpx==0.28.1
+playwright==1.64.1  # только для scripts/check_explainer.py
