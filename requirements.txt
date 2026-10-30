@@ -1,0 +1,14 @@
+# Работа с PostgreSQL: драйвер psycopg 3, бинарная сборка (не нужен компилятор)
+psycopg[binary]==3.3.6
+# HTTP-клиент для API hh.ru
+requests==2.34.2
+# Чтение .env в переменные окружения
+python-dotenv==1.2.4
+# Анализ и графики
+pandas==3.1.0
+matplotlib==3.11.2
+# Тесты
+pytest==9.2.0
+# Опционально: эндпоинт /api/summary
+fastapi==0.162.0
+httpx==0.28.1
