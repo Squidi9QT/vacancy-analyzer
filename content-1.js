@@ -1,4 +1,5 @@
-window.CONTENT = window.CONTENT || {};
+window.CONTENTS = window.CONTENTS || {};
+window.CONTENT = window.CONTENTS.ru = window.CONTENTS.ru || {};
 
 // ---------- 1. Карта проекта ----------
 CONTENT.mapNodes = [

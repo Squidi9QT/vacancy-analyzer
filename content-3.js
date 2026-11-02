@@ -1,4 +1,5 @@
-window.CONTENT = window.CONTENT || {};
+window.CONTENTS = window.CONTENTS || {};
+window.CONTENT = window.CONTENTS.ru = window.CONTENTS.ru || {};
 
 CONTENT.glossary = [
   ["Вакансия", "Объявление работодателя о поиске сотрудника. Для нас — запись с уникальным id на hh.ru.", "hh_id = 104857600, «Системный аналитик», Томск.", "model"],

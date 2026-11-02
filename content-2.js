@@ -1,4 +1,5 @@
-window.CONTENT = window.CONTENT || {};
+window.CONTENTS = window.CONTENTS || {};
+window.CONTENT = window.CONTENTS.ru = window.CONTENTS.ru || {};
 
 const V = [["id", "name", "role"], [[1, "Системный аналитик", "system_analyst"], [2, "Аналитик данных", "data_analyst"], [3, "Junior Python", "backend_junior"], [4, "System Analyst", "system_analyst"]]];
 

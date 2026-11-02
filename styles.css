@@ -265,3 +265,7 @@ pre code { overflow-wrap: normal; }
 .qvcw dd, .qvcw dt { min-width: 0; overflow-wrap: anywhere; }
 .chart-card, .panel, .card { min-width: 0; }
 .sql-code { white-space: pre-wrap; font-size: .82rem; }
+.lang-toggle {
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text);
+  border-radius: 8px; height: 36px; padding: 0 10px; cursor: pointer; font: inherit; font-weight: 600; font-size: .85rem;
+}
