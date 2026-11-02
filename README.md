@@ -3,29 +3,29 @@
 [English version](README.en.md)
 
 <p align="center">
-  <a href="https://squidi9qt.github.io/vacancy-analyzer/"><img src="https://img.shields.io/badge/%E2%96%B6%20%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8C%20%D0%B4%D0%B5%D0%BC%D0%BE-2a78d6?style=for-the-badge" alt="Открыть интерактивное демо"></a>
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/?lang=ru"><img src="https://img.shields.io/badge/%E2%96%B6%20%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8C%20%D0%B4%D0%B5%D0%BC%D0%BE-2a78d6?style=for-the-badge" alt="Открыть интерактивное демо"></a>
 </p>
 
 <p align="center">
-  <a href="https://squidi9qt.github.io/vacancy-analyzer/"><img src="docs/screenshots/demo.gif" alt="Открыть интерактивное демо" width="820"></a><br>
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/?lang=ru"><img src="docs/screenshots/demo.gif" alt="Открыть интерактивное демо" width="820"></a><br>
   <sub>Нажмите на картинку — откроется живой сайт: можно запускать анимацию, шагать по SQL-урокам, наводить на графики и пройти тест.</sub>
 </p>
 
 Учебный проект системного аналитика. Сервис собирает вакансии системных аналитиков, аналитиков данных и junior-backend разработчиков из официального API hh.ru, хранит их в PostgreSQL с историей изменений и отвечает на 6 бизнес-вопросов SQL-запросами и графиками.
 
-**Главный артефакт** — интерактивное объяснение: [онлайн](https://squidi9qt.github.io/vacancy-analyzer/) или локально `explainer/index.html` (открывается двойным кликом, сервер не нужен).
+**Главный артефакт** — интерактивное объяснение: [онлайн](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru) или локально `explainer/index.html` (открывается двойным кликом, сервер не нужен).
 
 ## Демо
 
-**👉 [Открыть интерактивное объяснение проекта](https://squidi9qt.github.io/vacancy-analyzer/)** — работает прямо в браузере, ничего ставить не нужно.
+**👉 [Открыть интерактивное объяснение проекта](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru)** — работает прямо в браузере, ничего ставить не нужно. Сайт на двух языках: переключатель RU / EN в шапке, английская версия — по [ссылке](https://squidi9qt.github.io/vacancy-analyzer/?lang=en).
 
 Можно потыкать: анимацию пути вакансии через систему, кликабельную ER-диаграмму, демо повторной загрузки (ON CONFLICT), пошаговые SQL-уроки на маленьких таблицах, графики с подсказками и тест с разбором ответов.
 
 | | |
 |---|---|
-| **Модель данных:** клик по таблице объясняет ключи и ограничения<br>[![ER-диаграмма](docs/screenshots/02_er.png)](https://squidi9qt.github.io/vacancy-analyzer/#model) | **ETL:** что происходит при повторном запуске загрузки<br>[![Upsert](docs/screenshots/03_upsert.png)](https://squidi9qt.github.io/vacancy-analyzer/#etl) |
-| **SQL по шагам:** gaps and islands на маленькой таблице<br>[![SQL-урок](docs/screenshots/04_sql_lesson.png)](https://squidi9qt.github.io/vacancy-analyzer/#sql) | **Графики:** медиана зарплат с подсказкой при наведении<br>[![Зарплаты](docs/screenshots/05_salary_chart.png)](https://squidi9qt.github.io/vacancy-analyzer/#charts) |
-| **Навыки × города**<br>[![Тепловая карта](docs/screenshots/06_heatmap.png)](https://squidi9qt.github.io/vacancy-analyzer/#charts) | **Проверь себя:** разбор каждого варианта ответа<br>[![Тест](docs/screenshots/07_quiz.png)](https://squidi9qt.github.io/vacancy-analyzer/#selfcheck) |
+| **Модель данных:** клик по таблице объясняет ключи и ограничения<br>[![ER-диаграмма](docs/screenshots/02_er.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#model) | **ETL:** что происходит при повторном запуске загрузки<br>[![Upsert](docs/screenshots/03_upsert.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#etl) |
+| **SQL по шагам:** gaps and islands на маленькой таблице<br>[![SQL-урок](docs/screenshots/04_sql_lesson.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#sql) | **Графики:** медиана зарплат с подсказкой при наведении<br>[![Зарплаты](docs/screenshots/05_salary_chart.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#charts) |
+| **Навыки × города**<br>[![Тепловая карта](docs/screenshots/06_heatmap.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#charts) | **Проверь себя:** разбор каждого варианта ответа<br>[![Тест](docs/screenshots/07_quiz.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#selfcheck) |
 
 <p align="center"><img src="docs/screenshots/08_mobile_dark.png" width="260" alt="Мобильная версия, тёмная тема"><br><sub>Мобильная версия, тёмная тема</sub></p>
 

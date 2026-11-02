@@ -1,14 +1,16 @@
-"""Скриншоты сайта-объяснения для README: python scripts/take_screenshots.py"""
+"""Скриншоты сайта-объяснения для README: python scripts/take_screenshots.py [ru|en]"""
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-URL = (ROOT / "explainer" / "index.html").as_uri()
-OUT = ROOT / "docs" / "screenshots"
+LANG = sys.argv[1] if len(sys.argv) > 1 else "ru"
+URL = (ROOT / "explainer" / "index.html").as_uri() + f"?lang={LANG}"
+OUT = ROOT / "docs" / "screenshots" / ("" if LANG == "ru" else LANG)
 
 
 def main() -> None:

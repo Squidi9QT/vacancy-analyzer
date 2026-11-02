@@ -1,16 +1,18 @@
-"""Анимированное превью сайта для README: python scripts/make_demo_gif.py"""
+"""Анимированное превью сайта для README: python scripts/make_demo_gif.py [ru|en]"""
 
 from __future__ import annotations
 
 import io
+import sys
 from pathlib import Path
 
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-URL = (ROOT / "explainer" / "index.html").as_uri()
-OUT = ROOT / "docs" / "screenshots" / "demo.gif"
+LANG = sys.argv[1] if len(sys.argv) > 1 else "ru"
+URL = (ROOT / "explainer" / "index.html").as_uri() + f"?lang={LANG}"
+OUT = ROOT / "docs" / "screenshots" / ("demo.gif" if LANG == "ru" else f"demo.{LANG}.gif")
 W, H = 1100, 700
 
 

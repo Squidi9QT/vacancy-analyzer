@@ -11,15 +11,37 @@ ROOT = Path(__file__).resolve().parent.parent
 URL = (ROOT / "explainer" / "index.html").as_uri()
 
 
+TEXT = {
+    "ru": {"scd": "SCD тип 2", "lost": "потеряны", "ok": "Успех", "step": "Шаг", "search": "индекс", "score": "1 из", "traps": "Ловушки"},
+    "en": {"scd": "SCD type 2", "lost": "lost", "ok": "Success", "step": "Step", "search": "index", "score": "1 of", "traps": "Traps"},
+}
+
+
 def main() -> int:
     shots = Path(sys.argv[1]) if len(sys.argv) > 1 else None
     problems: list[str] = []
     with sync_playwright() as p:
         browser = p.chromium.launch()
+        for lang in ("ru", "en"):
+            check_lang(browser, lang, problems, shots)
+        browser.close()
+    if problems:
+        print("ПРОБЛЕМЫ:")
+        for pr in problems:
+            print(" -", pr)
+        return 1
+    print("OK: оба языка, ошибок в консоли нет, интерактив работает, мобильная вёрстка без горизонтальной прокрутки")
+    return 0
+
+
+def check_lang(browser, lang: str, problems: list[str], shots: Path | None) -> None:
+    t = TEXT[lang]
+    url = f"{URL}?lang={lang}"
+    if True:
         page = browser.new_page(viewport={"width": 1280, "height": 900})
-        page.on("console", lambda m: problems.append(f"console.{m.type}: {m.text}") if m.type in ("error", "warning") else None)
-        page.on("pageerror", lambda e: problems.append(f"pageerror: {e}"))
-        page.goto(URL)
+        page.on("console", lambda m: problems.append(f"[{lang}] console.{m.type}: {m.text}") if m.type in ("error", "warning") else None)
+        page.on("pageerror", lambda e: problems.append(f"[{lang}] pageerror: {e}"))
+        page.goto(url)
         page.wait_for_load_state("load")
 
         counts = page.evaluate("""() => ({
@@ -46,16 +68,16 @@ def main() -> int:
         page.click("#mapSvg .node[data-id='transform']")
         assert "Transform" in page.inner_text("#mapDetails")
         page.click("#animBtn")
-        page.wait_for_function("document.querySelector('#animCaption').textContent.includes('Шаг 2')", timeout=10000)
+        page.wait_for_function("document.querySelector('#animCaption').textContent.includes('" + t["step"] + " 2')", timeout=10000)
         page.click("#erSvg .er-table[data-id='vacancy_snapshot']")
-        if "SCD тип 2" not in page.inner_text("#erDetails"):
+        if t["scd"] not in page.inner_text("#erDetails"):
             problems.append("ER: детали vacancy_snapshot не показались")
         page.click("#reqQuiz .opt >> nth=1")
         page.click("#pagSeg button[data-found='2600']")
         page.click("#pagRun")
-        page.wait_for_function("document.querySelector('#pagLog').textContent.includes('потеряны')", timeout=15000)
+        page.wait_for_function("document.querySelector('#pagLog').textContent.includes('" + t["lost"] + "')", timeout=15000)
         page.click("#retRun")
-        page.wait_for_function("document.querySelector('#retLog').textContent.includes('Успех')", timeout=15000)
+        page.wait_for_function("document.querySelector('#retLog').textContent.includes('" + t["ok"] + "')", timeout=15000)
         for mode in ("repeat", "change", "plain"):
             page.click(f"#upSeg button[data-m='{mode}']")
         for i in range(counts["sqlTabs"]):
@@ -63,12 +85,12 @@ def main() -> int:
             while page.is_enabled("#sqlLesson [data-a='next']"):
                 page.click("#sqlLesson [data-a='next']")
             title = page.inner_text("#sqlLesson .step-title")
-            if "Шаг" not in title:
+            if t["step"] not in title:
                 problems.append(f"SQL-урок {i}: нет заголовка шага")
             has_mark = page.evaluate(f"window.CONTENT.sqlLessons[{i}].steps.at(-1).mark !== ''")
             if has_mark and not page.query_selector("#sqlLesson .sql-code .mark"):
                 problems.append(f"SQL-урок {i}: фрагмент SQL последнего шага не найден в тексте запроса")
-        page.fill("#glossarySearch", "индекс")
+        page.fill("#glossarySearch", t["search"])
         n = page.evaluate("document.querySelectorAll('#glossaryList .card').length")
         if n < 3:
             problems.append(f"поиск «индекс» нашёл {n} терминов")
@@ -81,39 +103,30 @@ def main() -> int:
         if page.is_hidden("#tooltip"):
             problems.append("график зарплат: подсказка при наведении не появилась")
         page.click("#chartList [data-table='heatmap']")
-        page.click("#interviewFilters button >> text=Ловушки")
+        page.click(f"#interviewFilters button >> text={t['traps']}")
         page.click("#quizList .quiz >> nth=0 >> .opt >> nth=1")
-        if "1 из" not in page.inner_text("#quizScore"):
+        if t["score"] not in page.inner_text("#quizScore"):
             problems.append("тест: счёт не обновился")
-        page.click("#themeToggle")
+        if lang == "en":
+            import re
+            body = page.inner_text("main")
+            cyr = [w for w in re.findall(r"[А-Яа-яЁё][А-Яа-яЁё ]{2,}", body)]
+            allowed = {"Системный аналитик", "Аноним"}
+            leftovers = sorted(set(w.strip() for w in cyr) - allowed)
+            if leftovers:
+                problems.append(f"[en] русский текст на странице: {leftovers[:15]}")
         if shots:
             shots.mkdir(parents=True, exist_ok=True)
-            page.screenshot(path=str(shots / "desktop_dark.png"), full_page=False)
-            page.click("#themeToggle")
-            page.goto(URL + "#charts")
-            page.screenshot(path=str(shots / "desktop_charts.png"), full_page=False)
+            page.screenshot(path=str(shots / f"desktop_{lang}.png"))
 
         mobile = browser.new_page(viewport={"width": 375, "height": 800})
-        mobile.on("pageerror", lambda e: problems.append(f"mobile pageerror: {e}"))
-        mobile.goto(URL)
+        mobile.on("pageerror", lambda e: problems.append(f"[{lang}] mobile pageerror: {e}"))
+        mobile.goto(url)
         overflow = mobile.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")
         if overflow > 0:
-            wide = mobile.evaluate("""() => [...document.querySelectorAll('main *')]
-                .filter(e => e.getBoundingClientRect().right > document.documentElement.clientWidth + 1
-                             && !e.closest('.tbl-wrap, .map-wrap, .er-wrap, pre, .timeline'))
-                .slice(0, 5).map(e => e.tagName + '.' + e.className + ' ' + Math.round(e.getBoundingClientRect().right))""")
-            problems.append(f"телефон: горизонтальная прокрутка {overflow}px, виновники: {wide}")
-        if shots:
-            mobile.screenshot(path=str(shots / "mobile.png"))
-        browser.close()
-
-    if problems:
-        print("ПРОБЛЕМЫ:")
-        for pr in problems:
-            print(" -", pr)
-        return 1
-    print("OK: ошибок в консоли нет, интерактив работает, мобильная вёрстка без горизонтальной прокрутки")
-    return 0
+            problems.append(f"[{lang}] телефон: горизонтальная прокрутка {overflow}px")
+        page.close()
+        mobile.close()
 
 
 if __name__ == "__main__":
