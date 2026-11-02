@@ -12,8 +12,8 @@ URL = (ROOT / "explainer" / "index.html").as_uri()
 
 
 TEXT = {
-    "ru": {"scd": "SCD тип 2", "lost": "потеряны", "ok": "Успех", "step": "Шаг", "search": "индекс", "score": "1 из", "traps": "Ловушки"},
-    "en": {"scd": "SCD type 2", "lost": "lost", "ok": "Success", "step": "Step", "search": "index", "score": "1 of", "traps": "Traps"},
+    "ru": {"scd": "SCD тип 2", "lost": "потеряны", "ok": "Успех", "step": "Шаг"},
+    "en": {"scd": "SCD type 2", "lost": "lost", "ok": "Success", "step": "Step"},
 }
 
 
@@ -49,21 +49,16 @@ def check_lang(browser, lang: str, problems: list[str], shots: Path | None) -> N
             mapNodes: document.querySelectorAll('#mapSvg .node').length,
             erTables: document.querySelectorAll('#erSvg .er-table').length,
             sqlTabs: document.querySelectorAll('#sqlTabs button').length,
-            glossary: window.CONTENT.glossary.length,
             adr: document.querySelectorAll('#adrList .panel').length,
             charts: document.querySelectorAll('#chartList svg').length,
             pitfalls: document.querySelectorAll('#pitfallList .card').length,
-            interview: document.querySelectorAll('#interviewList details').length,
-            quiz: document.querySelectorAll('#quizList .quiz').length,
-            tasks: document.querySelectorAll('#taskList .panel').length,
+            stories: document.querySelectorAll('#stories .card').length,
         })""")
         print("Элементы:", counts)
-        expect = {"nav": 12, "mapNodes": 8, "erTables": 8, "sqlTabs": 6, "adr": 6, "charts": 5}
+        expect = {"nav": 8, "stories": 8, "mapNodes": 8, "erTables": 8, "sqlTabs": 6, "adr": 6, "charts": 5}
         for key, val in expect.items():
             if counts[key] != val:
                 problems.append(f"{key}: ожидалось {val}, есть {counts[key]}")
-        if counts["interview"] < 30:
-            problems.append(f"вопросов на собеседовании {counts['interview']} < 30")
 
         page.click("#mapSvg .node[data-id='transform']")
         assert "Transform" in page.inner_text("#mapDetails")
@@ -72,7 +67,6 @@ def check_lang(browser, lang: str, problems: list[str], shots: Path | None) -> N
         page.click("#erSvg .er-table[data-id='vacancy_snapshot']")
         if t["scd"] not in page.inner_text("#erDetails"):
             problems.append("ER: детали vacancy_snapshot не показались")
-        page.click("#reqQuiz .opt >> nth=1")
         page.click("#pagSeg button[data-found='2600']")
         page.click("#pagRun")
         page.wait_for_function("document.querySelector('#pagLog').textContent.includes('" + t["lost"] + "')", timeout=15000)
@@ -90,10 +84,6 @@ def check_lang(browser, lang: str, problems: list[str], shots: Path | None) -> N
             has_mark = page.evaluate(f"window.CONTENT.sqlLessons[{i}].steps.at(-1).mark !== ''")
             if has_mark and not page.query_selector("#sqlLesson .sql-code .mark"):
                 problems.append(f"SQL-урок {i}: фрагмент SQL последнего шага не найден в тексте запроса")
-        page.fill("#glossarySearch", t["search"])
-        n = page.evaluate("document.querySelectorAll('#glossaryList .card').length")
-        if n < 3:
-            problems.append(f"поиск «индекс» нашёл {n} терминов")
         page.click("#adrList [data-alt='ADR-003']")
         if page.is_hidden("#alt-ADR-003"):
             problems.append("ADR: альтернатива не раскрылась")
@@ -103,10 +93,6 @@ def check_lang(browser, lang: str, problems: list[str], shots: Path | None) -> N
         if page.is_hidden("#tooltip"):
             problems.append("график зарплат: подсказка при наведении не появилась")
         page.click("#chartList [data-table='heatmap']")
-        page.click(f"#interviewFilters button >> text={t['traps']}")
-        page.click("#quizList .quiz >> nth=0 >> .opt >> nth=1")
-        if t["score"] not in page.inner_text("#quizScore"):
-            problems.append("тест: счёт не обновился")
         if lang == "en":
             import re
             body = page.inner_text("main")

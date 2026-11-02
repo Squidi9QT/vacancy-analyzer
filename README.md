@@ -7,120 +7,79 @@
 </p>
 
 <p align="center">
-  <a href="https://squidi9qt.github.io/vacancy-analyzer/?lang=ru"><img src="docs/screenshots/demo.gif" alt="Открыть интерактивное демо" width="820"></a><br>
-  <sub>Нажмите на картинку — откроется живой сайт: можно запускать анимацию, шагать по SQL-урокам, наводить на графики и пройти тест.</sub>
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/?lang=ru"><img src="docs/screenshots/demo.gif" alt="Интерактивное демо" width="820"></a><br>
+  <sub>Нажмите на картинку — откроется живое демо. Работает в браузере, на русском и английском.</sub>
 </p>
 
-Учебный проект системного аналитика. Сервис собирает вакансии системных аналитиков, аналитиков данных и junior-backend разработчиков из официального API hh.ru, хранит их в PostgreSQL с историей изменений и отвечает на 6 бизнес-вопросов SQL-запросами и графиками.
+Сервис собирает вакансии системных аналитиков, аналитиков данных и junior-backend разработчиков из API hh.ru, хранит их в PostgreSQL с историей изменений и отвечает на шесть бизнес-вопросов: какие навыки нужны, сколько платят, кто нанимает, где скрывают зарплату, что появилось за неделю и какие компании нанимают постоянно.
 
-**Главный артефакт** — интерактивное объяснение: [онлайн](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru) или локально `explainer/index.html` (открывается двойным кликом, сервер не нужен).
+## Что внутри
+
+- **Требования:** цели и метрики, user stories с критериями приёмки, use cases, открытые вопросы с принятыми решениями.
+- **Модель данных:** 8 таблиц, история изменений (SCD2), ограничения целостности, 6 архитектурных решений (ADR).
+- **Загрузка (ETL):** повторный запуск без дублей, повторы при ошибках API с экспоненциальной задержкой, журнал запусков.
+- **SQL-аналитика:** CTE, оконные функции, медиана, GROUPING SETS, gaps-and-islands. Два самых тяжёлых запроса ускорены в 12 и 28 раз по результатам EXPLAIN ANALYZE.
+- **Результаты:** графики и интерактивное демо на двух языках.
+- **Качество:** 50 автотестов.
 
 ## Демо
 
-**👉 [Открыть интерактивное объяснение проекта](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru)** — работает прямо в браузере, ничего ставить не нужно. Сайт на двух языках: переключатель RU / EN в шапке, английская версия — по [ссылке](https://squidi9qt.github.io/vacancy-analyzer/?lang=en).
-
-Можно потыкать: анимацию пути вакансии через систему, кликабельную ER-диаграмму, демо повторной загрузки (ON CONFLICT), пошаговые SQL-уроки на маленьких таблицах, графики с подсказками и тест с разбором ответов.
-
 | | |
 |---|---|
-| **Модель данных:** клик по таблице объясняет ключи и ограничения<br>[![ER-диаграмма](docs/screenshots/02_er.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#model) | **ETL:** что происходит при повторном запуске загрузки<br>[![Upsert](docs/screenshots/03_upsert.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#etl) |
-| **SQL по шагам:** gaps and islands на маленькой таблице<br>[![SQL-урок](docs/screenshots/04_sql_lesson.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#sql) | **Графики:** медиана зарплат с подсказкой при наведении<br>[![Зарплаты](docs/screenshots/05_salary_chart.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#charts) |
-| **Навыки × города**<br>[![Тепловая карта](docs/screenshots/06_heatmap.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#charts) | **Проверь себя:** разбор каждого варианта ответа<br>[![Тест](docs/screenshots/07_quiz.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#selfcheck) |
+| **Модель данных:** клик по таблице показывает ключи и ограничения<br>[![ER-диаграмма](docs/screenshots/02_er.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#model) | **Загрузка:** что происходит при повторном запуске<br>[![Повторная загрузка](docs/screenshots/03_upsert.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#etl) |
+| **SQL по шагам:** поиск непрерывных серий месяцев<br>[![SQL по шагам](docs/screenshots/04_sql_lesson.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#sql) | **Результаты:** медиана зарплат с подсказкой при наведении<br>[![Зарплаты](docs/screenshots/05_salary_chart.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#charts) |
+| **Навыки × города**<br>[![Тепловая карта](docs/screenshots/06_heatmap.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#charts) | **Архитектурные решения** с альтернативами<br>[![ADR](docs/screenshots/07_adr.png)](https://squidi9qt.github.io/vacancy-analyzer/?lang=ru#decisions) |
 
 <p align="center"><img src="docs/screenshots/08_mobile_dark.png" width="260" alt="Мобильная версия, тёмная тема"><br><sub>Мобильная версия, тёмная тема</sub></p>
 
-Графики отчёта (matplotlib) — в [`reports/`](reports/), например [топ навыков](reports/01_top_skills.png) и [доля вакансий без зарплаты](reports/03_no_salary_by_city.png).
+## Бизнес-вопросы и SQL
 
-## Данные: важно прочитать
+| # | Вопрос | Запрос | Приём SQL |
+|---|--------|--------|-----------|
+| 1 | Какие навыки чаще всего в вакансиях аналитиков? | [`q1_top_skills.sql`](sql/queries/q1_top_skills.sql) | CTE, FILTER, HAVING, RANK |
+| 2 | Как менялась медианная зарплата по месяцам? | [`q2_salary_median_by_month.sql`](sql/queries/q2_salary_median_by_month.sql) | ROW_NUMBER, percentile_cont, GROUPING SETS |
+| 3 | Кто публикует больше всего и как часто обновляет? | [`q3_employers_activity.sql`](sql/queries/q3_employers_activity.sql) | LAG, IS DISTINCT FROM |
+| 4 | Доля вакансий без зарплаты по регионам | [`q4_no_salary_by_region.sql`](sql/queries/q4_no_salary_by_region.sql) | ROLLUP, доверительные интервалы |
+| 5 | Новые вакансии за 7 дней без дублей | [`q5_new_last_7_days.sql`](sql/queries/q5_new_last_7_days.sql) | anti-join (LEFT JOIN … IS NULL) |
+| 6 | Кто нанимает 3+ месяца подряд | [`q6_stable_employers.sql`](sql/queries/q6_stable_employers.sql) | gaps-and-islands |
 
-API hh.ru на анонимный запрос ответил `403 {"errors":[{"type":"forbidden"}]}` (проверено 2026-10-31). Поэтому проект по умолчанию работает на **фикстурах**: `tests/fixtures/hh_world.json` — синтетический «мир» из 1163 вакансий за март–октябрь 2026 в формате ответов API hh.ru, с историей изменений. Генератор `scripts/generate_fixtures.py` детерминирован (seed=42): у всех получаются одни и те же цифры.
+## Стек
 
-**Все выводы в отчёте — выводы о синтетических данных, а не о реальном рынке.** Работодатели вымышленные.
+Python 3.12+, PostgreSQL 16, psycopg 3 (без ORM), pandas, matplotlib, pytest, Docker Compose, GitHub Pages.
 
-Реальный клиент API (`src/extract/http_client.py`) написан и покрыт тестами на поддельной HTTP-сессии. Чтобы включить его, получите токен приложения на dev.hh.ru и укажите в `.env`: `DATA_SOURCE=api`, `HH_ACCESS_TOKEN=…`, `HH_USER_AGENT=ВашеПриложение/1.0 (ваш@email)`.
+## Данные
 
-## Как запустить за 5 минут
+API hh.ru без токена приложения отвечает `403`, поэтому проект работает на синтетических данных в формате ответов API: 1163 вакансии за март–октябрь 2026 с историей изменений. Генератор детерминирован, цифры воспроизводимы. **Выводы описывают синтетические данные, а не реальный рынок; работодатели вымышленные.** Клиент настоящего API реализован и включается через `.env` (`DATA_SOURCE=api`, `HH_ACCESS_TOKEN`).
 
-Нужны Python 3.12+ и PostgreSQL 16. Разработка шла на Python 3.14 и PostgreSQL 16 из Homebrew.
+## Запуск
+
+Нужны Python 3.12+ и PostgreSQL 16 (локально или через `docker compose up -d`).
 
 ```bash
-# 1. Окружение и зависимости
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 ```
 
-**2. База.** Вариант А — Docker:
-
 ```bash
-docker compose up -d
-```
-
-Вариант Б — локальный PostgreSQL. Создайте две базы и поправьте `DATABASE_URL` и `TEST_DATABASE_URL` в `.env` (например, `postgresql:///vacancies`):
-
-```bash
-createdb vacancies && createdb vacancies_test
-```
-
-```bash
-# 3. Схема, данные за 8 месяцев (244 «ежедневных» запуска, ~3 с), отчёт
 python -m src.main init-db
 python -m src.main backfill --from 2026-03-01 --to 2026-10-30
 python -m src.main report
-
-# 4. Проверка
 pytest -q
 ```
 
-После этого: графики и CSV — в `reports/`, сайт — `explainer/index.html`.
-
-Другие команды:
-
-```bash
-python -m src.main load --days 7      # загрузка за 7 дней (на фикстурах «сегодня» = FIXTURE_NOW)
-python -m src.main init-db --reset    # удалить ВСЕ данные и создать схему заново
-psql -d vacancies -f sql/queries/q6_stable_employers.sql   # любой запрос — прямо в psql
-```
+Графики и CSV появятся в `reports/`, демо открывается из `explainer/index.html`.
 
 ## Структура
 
 | Путь | Что там |
 |------|---------|
-| `docs/requirements/` | Цели и метрики, стейкхолдеры, 8 user stories, 3 use case, глоссарий, 10 открытых вопросов с решениями |
-| `docs/data_model.md` | ER-диаграмма (Mermaid), назначение таблиц, ограничения, почему нормализация |
-| `docs/decisions/` | ADR-001…006: ключи, валюта, история (SCD2), навыки, идемпотентная загрузка, отказ от ORM |
-| `docs/query_plans/` | EXPLAIN ANALYZE до и после оптимизации на базе в 300 тыс. вакансий |
-| `docs/sqlite_vs_postgres.md` | Чем пришлось бы жертвовать на SQLite |
-| `docs/journal.md`, `docs/summary.md` | Журнал этапов и итоговая сводка |
-| `sql/001_schema.sql`, `sql/002_indexes.sql` | Схема и индексы, добавленные по результатам замеров |
-| `sql/queries/` | По файлу на бизнес-вопрос (q1–q6, q1b для тепловой карты) |
-| `src/extract/` | Клиент API: пагинация, повторы с экспоненциальной задержкой, таймауты; клиент-симулятор на фикстурах |
-| `src/transform/` | JSON → плоские записи: зарплата, навыки, роль, хэш содержимого |
-| `src/load/`, `src/pipeline.py` | Upsert в PostgreSQL, история версий, журнал запусков |
-| `src/report.py` | Графики matplotlib, CSV, `explainer/data.js` |
-| `src/api.py` | Опционально: `GET /api/summary` (нужен `pip install uvicorn`, запуск `python -m src.main serve`) |
-| `tests/` | 50 тестов: transform, extract без сети, загрузка на тестовой БД, API |
-| `explainer/` | Интерактивное объяснение проекта |
-| `scripts/` | Генератор фикстур, «большая» база для замеров, сохранение планов, проверка сайта, скриншоты и GIF (Playwright) |
-| `scripts/publish_demo.sh` | Публикация `explainer/` на GitHub Pages (ветка `gh-pages`) |
-
-## Шесть бизнес-вопросов
-
-| # | Вопрос | Запрос | Приём SQL |
-|---|--------|--------|-----------|
-| 1 | Какие навыки чаще всего в вакансиях аналитиков? | `q1_top_skills.sql` | CTE, JOIN через таблицу связи, FILTER, HAVING, RANK |
-| 2 | Как менялась медианная зарплата по месяцам (роль, город)? | `q2_salary_median_by_month.sql` | ROW_NUMBER (первая версия), percentile_cont, GROUPING SETS |
-| 3 | Кто публикует больше всего и как часто обновляет? | `q3_employers_activity.sql` | LAG с именованным окном, IS DISTINCT FROM |
-| 4 | Доля вакансий без зарплаты по регионам | `q4_no_salary_by_region.sql` | avg по условию, ROLLUP, HAVING (+ интервалы Уилсона в отчёте) |
-| 5 | Новые за 7 дней, без дублей по внешнему id | `q5_new_last_7_days.sql` | LEFT JOIN … IS NULL (anti-join), коррелированный подзапрос |
-| 6 | Кто нанимает 3+ месяца подряд | `q6_stable_employers.sql` | gaps-and-islands |
-
-## Проверка сайта
-
-```bash
-pip install playwright && python -m playwright install chromium
-python scripts/check_explainer.py
-```
-
-Скрипт открывает сайт как файл, нажимает все интерактивные элементы, проверяет консоль и вёрстку на ширине 375 px.
+| [`docs/requirements/`](docs/requirements/) | Цели, стейкхолдеры, user stories, use cases, открытые вопросы |
+| [`docs/data_model.md`](docs/data_model.md) | ER-диаграмма и описание таблиц |
+| [`docs/decisions/`](docs/decisions/) | ADR-001…006 |
+| [`docs/query_plans/`](docs/query_plans/) | Планы запросов до и после оптимизации |
+| [`sql/`](sql/) | Схема, индексы, запросы |
+| [`src/`](src/) | ETL, отчёт, API |
+| [`tests/`](tests/) | Автотесты |
+| [`explainer/`](explainer/) | Интерактивное демо |
+| [`reports/`](reports/) | Графики matplotlib и CSV |

@@ -219,13 +219,14 @@
     $("#mistakes").innerHTML = C.mistakes.map((m) => `<div class="card"><h3>${esc(m.title)}</h3><p>${esc(m.text)}</p></div>`).join("");
   }
   function initRequirements() {
-    $("#stories").innerHTML = C.stories.map((s) => `<div class="card"><span class="tag">${s.id}</span>
+    if ($("#stories")) $("#stories").innerHTML = C.stories.map((s) => `<div class="card"><span class="tag">${s.id}</span>
       <p><b>${T.as}</b> ${esc(s.role)}, <b>${T.iwant}</b> ${esc(s.want)}, <b>${T.sothat}</b> ${esc(s.why)}.</p>
       <p class="muted">${T.acceptance}</p><ul>${s.ac.map((a) => `<li>${esc(a)}</li>`).join("")}</ul></div>`).join("");
-    $("#usecases").innerHTML = C.usecases.map((u) => `<details class="acc"><summary>${u.id}. ${esc(u.title)} <span class="muted">· ${T.actor}: ${esc(u.actor)}</span></summary>
+    if ($("#usecases")) $("#usecases").innerHTML = C.usecases.map((u) => `<details class="acc"><summary>${u.id}. ${esc(u.title)} <span class="muted">· ${T.actor}: ${esc(u.actor)}</span></summary>
       <div class="acc-body"><p><b>${T.mainFlow}</b></p><ol>${u.main.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
       <p><b>${T.altFlows}</b></p><ul>${u.alt.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div></details>`).join("");
     const box = $("#reqQuiz");
+    if (!box) return;
     C.reqQuiz.forEach((q, qi) => {
       const card = el("div", { class: "panel quiz" }, `<p><b>${T.situation(qi + 1)}</b> ${esc(q.situation)}</p>`);
       const opts = el("div", { class: "opts" });
@@ -435,8 +436,7 @@
         <button class="btn small primary" data-a="next">${T.next}</button><button class="btn small" data-a="reset">${T.reset}</button>
         <div class="step-dots"></div></div><h3 class="step-title"></h3><p class="step-text"></p><div class="step-tables"></div></div>
       <div><pre class="sql-code"><code></code></pre></div></div>
-      <h3>${T.whySo}</h3><p>${l.why}</p>
-      <h3>${T.mistakes}</h3><ul>${l.mistakes.map((m) => `<li>${esc(m)}</li>`).join("")}</ul></div>`;
+      <h3>${T.whySo}</h3><p>${l.why}</p></div>`;
     const draw = () => {
       const s = l.steps[step];
       $(".step-title", box).textContent = `${T.stepOf(step + 1, l.steps.length)} ${s.title}`;
@@ -479,7 +479,7 @@
       const items = C.glossary.filter((g) => !q || g.slice(0, 3).join(" ").toLowerCase().includes(q));
       $("#glossaryCount").textContent = T.terms(items.length, C.glossary.length);
       $("#glossaryList").innerHTML = items.map(([term, def, ex, sec]) => `<div class="card"><h3>${hl(term)}</h3><p>${hl(def)}</p>
-        <p class="muted"><b>${T.inProject}</b> ${hl(ex)}</p><p><a href="#${sec}">→ ${esc(SECTION_TITLES[sec] || sec)}</a></p></div>`).join("")
+        <p class="muted"><b>${T.inProject}</b> ${hl(ex)}</p><p><a href="${document.getElementById(sec) ? "" : "../explainer/index.html"}#${sec}">→ ${esc(SECTION_TITLES[sec] || sec)}</a></p></div>`).join("")
         || `<p class="muted">${T.notFound}</p>`;
     };
     input.addEventListener("input", draw);
@@ -773,6 +773,7 @@
 
   // ---------- start ----------
   function safe(name, fn) {
+    if (name !== "nav" && !document.getElementById(name)) return;
     try { fn(); } catch (e) { console.error("Section " + name + " failed to render:", e); }
   }
   initLang();

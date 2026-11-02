@@ -39,8 +39,8 @@ def main() -> None:
         page.locator("#card-salary").screenshot(path=str(OUT / "05_salary_chart.png"))
         page.locator("#card-heatmap").screenshot(path=str(OUT / "06_heatmap.png"))
 
-        page.click("#quizList .quiz >> nth=6 >> .opt >> nth=0")
-        page.locator("#quizList .quiz >> nth=6").screenshot(path=str(OUT / "07_quiz.png"))
+        page.click("#adrList [data-alt='ADR-005']")
+        page.locator("#adrList .panel >> nth=4").screenshot(path=str(OUT / "07_adr.png"))
 
         mobile = browser.new_page(viewport={"width": 390, "height": 844}, device_scale_factor=2,
                                   color_scheme="dark")
