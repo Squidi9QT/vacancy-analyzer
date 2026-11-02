@@ -65,13 +65,12 @@ class ExplodingClient(FixtureClient):
 
 
 def test_failed_run_is_logged_and_rerun_completes(db):
-    """Что будет при падении на середине: записанное остаётся, запуск помечен failed,
-    перезапуск догружает остальное без дублей."""
+    """Падение на середине: записанное остаётся, запуск failed, перезапуск догружает без дублей."""
     with pytest.raises(ConnectionError):
         run_load(db, ExplodingClient(FIXTURE_WORLD, AS_OF, fail_on=10), AS_OF, 7, "fixtures")
     status, error = db.execute("SELECT status, error_text FROM load_run").fetchone()
     assert status == "failed" and "сеть пропала" in error
-    assert counts(db)["vacancy"] == 9  # 9 вакансий успели записаться, 10-я откатилась целиком
+    assert counts(db)["vacancy"] == 9
 
     run_load(db, FixtureClient(FIXTURE_WORLD, AS_OF), AS_OF, 7, "fixtures")
     after_rerun = counts(db)
@@ -107,13 +106,11 @@ def test_history_scd2(db, load_json):
     changed["salary_range"]["to"] = 180000
     changed["published_at"] = "2026-10-27T10:00:00+0300"
     run_load(db, OneVacancyClient(changed), end_of_day(date(2026, 10, 27)), 1, "fixtures")
-    run_load(db, OneVacancyClient(changed), end_of_day(date(2026, 10, 27)), 1, "fixtures")  # повтор
+    run_load(db, OneVacancyClient(changed), end_of_day(date(2026, 10, 27)), 1, "fixtures")
 
     rows = db.execute(
         "SELECT salary_to, valid_to IS NULL FROM vacancy_snapshot ORDER BY valid_from").fetchall()
     assert rows == [(160000, False), (180000, True)]
-    # AT TIME ZONE обязателен: ::date берёт пояс СЕССИИ. На машине разработки это Asia/Tomsk (+7),
-    # и 23:59 по Москве превращалось в следующий день — тест падал. Реальная ловушка, см. «Подводные камни».
     first_seen, last_seen, salary_to = db.execute(
         "SELECT (first_seen_at AT TIME ZONE 'Europe/Moscow')::date, "
         "(last_seen_at AT TIME ZONE 'Europe/Moscow')::date, salary_to FROM vacancy").fetchone()

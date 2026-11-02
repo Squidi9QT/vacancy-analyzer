@@ -1,10 +1,4 @@
-"""Опциональный HTTP-эндпоинт /api/summary на FastAPI.
-
-Запуск: pip install uvicorn && python -m src.main serve → http://127.0.0.1:8000/api/summary
-Отдаёт сводку для дашборда: объёмы, свежесть данных, топ-5 навыков.
-Соединение открывается на каждый запрос: для учебного сервиса так проще, чем пул.
-Цена: ~5 мс на подключение; для нагрузки нужен пул (psycopg_pool).
-"""
+"""Опциональный HTTP-эндпоинт /api/summary на FastAPI."""
 
 from __future__ import annotations
 
@@ -38,8 +32,6 @@ def summary() -> dict:
     return {
         "vacancies": counts[0],
         "employers": counts[1],
-        # psycopg возвращает время в поясе сессии (на машине разработки Asia/Tomsk, +07).
-        # Приводим к Москве явно, иначе «30 октября 23:59» превратится в «31 октября 03:59».
         "data_as_of": counts[2].astimezone(MSK).isoformat() if counts[2] else None,
         "pct_without_salary": float(counts[3]) if counts[3] is not None else None,
         "top_skills": [{"skill": name, "vacancies": n} for name, n in top],

@@ -1,8 +1,4 @@
-"""Общие фикстуры pytest.
-
-Фикстура pytest (не путать с фикстурами-данными в tests/fixtures/) — функция,
-которая готовит окружение для теста: соединение с БД, загруженный JSON и т. п.
-"""
+"""Общие фикстуры pytest."""
 
 from __future__ import annotations
 
@@ -28,12 +24,7 @@ def load_json():
 
 @pytest.fixture
 def db():
-    """Чистая тестовая база на каждый тест.
-
-    Используется ОТДЕЛЬНАЯ база (TEST_DATABASE_URL): схема удаляется целиком.
-    Если PostgreSQL недоступен — тесты загрузки пропускаются (skip), а не падают:
-    тесты transform и extract должны работать и без базы.
-    """
+    """Чистая тестовая база на каждый тест."""
     url = get_settings().test_database_url
     try:
         conn = connect(url)

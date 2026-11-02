@@ -1,10 +1,4 @@
-"""Подключение к PostgreSQL и применение миграций.
-
-Миграция — SQL-файл, который меняет схему (sql/001_schema.sql, sql/002_indexes.sql).
-Файлы применяются по порядку имени. Все они написаны с IF NOT EXISTS,
-поэтому повторное применение безопасно — отдельная таблица версий не нужна.
-Цена: так нельзя «откатить» миграцию; для учебного проекта это приемлемо.
-"""
+"""Подключение к PostgreSQL и применение миграций."""
 
 from __future__ import annotations
 
@@ -20,19 +14,9 @@ SQL_DIR = PROJECT_ROOT / "sql"
 
 
 def connect(url: str) -> psycopg.Connection:
-    """Открыть соединение в режиме autocommit, транзакции — явно через conn.transaction().
-
-    Почему autocommit=True, хотя мы любим транзакции: в psycopg 3 при autocommit=False
-    ЛЮБОЙ запрос (даже SELECT) неявно открывает транзакцию, и тогда вложенный
-    `with conn.transaction()` становится лишь точкой сохранения (SAVEPOINT) — ничего
-    не коммитится до conn.commit(). Легко забыть и потерять все данные при выходе.
-    С autocommit=True блок `with conn.transaction()` — это настоящие BEGIN … COMMIT,
-    а одиночные SELECT выполняются сразу. Границы транзакций видны в коде.
-
-    Ошибка: psycopg.OperationalError, если база недоступна — с понятным текстом
-    о том, что проверить.
-    """
+    """Открыть соединение в режиме autocommit, транзакции — явно через conn.transaction()."""
     try:
+        # autocommit: иначе вложенный conn.transaction() в psycopg 3 становится SAVEPOINT без COMMIT
         return psycopg.connect(url, autocommit=True)
     except psycopg.OperationalError as exc:
         raise psycopg.OperationalError(
@@ -46,11 +30,7 @@ def migration_files() -> list[Path]:
 
 
 def apply_migrations(conn: psycopg.Connection, files: list[Path] | None = None) -> None:
-    """Выполнить SQL-файлы миграций в одной транзакции.
-
-    Вход: соединение; список файлов (по умолчанию все). Ошибка: исключение psycopg,
-    транзакция откатывается целиком — схема не останется «наполовину» созданной.
-    """
+    """Выполнить SQL-файлы миграций в одной транзакции."""
     with conn.transaction():
         for path in files or migration_files():
             log.info("Применяем миграцию %s", path.name)

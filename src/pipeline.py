@@ -1,13 +1,4 @@
-"""Оркестрация ETL: связывает extract → transform → load для одного запуска.
-
-Порядок одного запуска:
-  1. load_run ← 'running' (сразу коммит, чтобы запись пережила падение);
-  2. курсы валют из /dictionaries;
-  3. для каждой роли и каждого дня окна: страницы поиска;
-  4. вакансия уже есть и не поднималась → только last_seen_at (детальную карточку не качаем);
-     новая или поднятая → детальная карточка → transform → upsert (одна транзакция на вакансию);
-  5. load_run ← 'success' со счётчиками, или 'failed' с текстом ошибки.
-"""
+"""Оркестрация ETL: связывает extract → transform → load для одного запуска."""
 
 from __future__ import annotations
 
@@ -27,11 +18,7 @@ log = logging.getLogger(__name__)
 
 
 def day_slices(as_of: datetime, days: int) -> list[tuple[datetime, datetime]]:
-    """Окно [as_of - days, as_of) нарезанное на сутки.
-
-    Почему по суткам: API отдаёт максимум 2000 результатов на запрос. За сутки
-    вакансий одной роли намного меньше, поэтому так мы не упираемся в лимит.
-    """
+    """Окно [as_of - days, as_of) нарезанное на сутки."""
     if days < 1:
         raise ValueError("days должно быть >= 1")
     start = as_of - timedelta(days=days)
@@ -45,20 +32,13 @@ def day_slices(as_of: datetime, days: int) -> list[tuple[datetime, datetime]]:
 
 def run_load(conn: psycopg.Connection, client: BaseClient, as_of: datetime, days: int,
              source: str) -> dict:
-    """Один запуск загрузки за `days` дней до `as_of`.
-
-    Вход: соединение (autocommit), клиент источника, момент наблюдения, окно в днях,
-    имя источника для журнала. Выход: словарь счётчиков {processed, new, changed, skipped}.
-    Ошибка: любое исключение → load_run.status = 'failed' с текстом ошибки, исключение
-    пробрасывается дальше (CLI вернёт код 1). Уже записанные вакансии остаются: каждая
-    в своей транзакции, перезапуск их не задублирует (ADR-005).
-    """
+    """Один запуск загрузки за `days` дней до `as_of`."""
     run_id = repo.start_run(conn, as_of, source, {"days": days, "roles": list(SEARCH_QUERIES)})
     stats: Counter = Counter()
     log.info("Запуск #%s: источник=%s, as_of=%s, окно=%s дн.", run_id, source, as_of.isoformat(), days)
     try:
         repo.upsert_currencies(conn, transform_currencies(client.get_dictionaries()))
-        seen: set[str] = set()  # одна вакансия может найтись двумя запросами — обрабатываем один раз
+        seen: set[str] = set()
         for role, text in SEARCH_QUERIES.items():
             for date_from, date_to in day_slices(as_of, days):
                 items = [it for it in client.iter_search(text, date_from, date_to) if it["id"] not in seen]

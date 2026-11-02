@@ -1,25 +1,4 @@
-"""Генератор воспроизводимых фикстур в формате API hh.ru.
-
-Зачем он нужен
---------------
-API hh.ru на анонимные запросы отвечает 403, а без сети проект должен работать.
-Поэтому мы генерируем «мир вакансий»: ~1500 вакансий за март–октябрь 2026,
-у части вакансий несколько версий (подняли в поиске, изменили зарплату).
-
-Генератор детерминирован: seed=42, поэтому у всех одинаковые данные
-и одинаковые цифры в отчёте. Запускать его нужно только если хочется
-поменять «мир»; готовый файл уже лежит в tests/fixtures/hh_world.json.
-
-Что на выходе
--------------
-tests/fixtures/hh_world.json:
-    {"dictionaries": {"currency": [...]},          # как /dictionaries в API
-     "vacancies": [{"id", "closed_at", "queries",   # служебные поля симулятора
-                    "versions": [{"valid_from", "detail": {...}}]}]}
-Поле detail — ровно та структура, которую отдаёт GET /vacancies/{id}.
-
-Запуск: python scripts/generate_fixtures.py
-"""
+"""Генератор воспроизводимых фикстур в формате API hh.ru."""
 
 from __future__ import annotations
 
@@ -35,7 +14,6 @@ END = date(2026, 10, 30)
 MSK = timezone(timedelta(hours=3))
 OUT = Path(__file__).resolve().parent.parent / "tests" / "fixtures" / "hh_world.json"
 
-# hh_id, название, вес (доля вакансий), множитель зарплаты, доля вакансий без зарплаты
 AREAS = [
     ("1", "Москва", 0.30, 1.25, 0.28),
     ("2", "Санкт-Петербург", 0.18, 1.10, 0.34),
@@ -47,7 +25,6 @@ AREAS = [
     ("160", "Алматы", 0.08, 0.95, 0.38),
 ]
 
-# rate — сколько единиц валюты за 1 рубль (так отдаёт /dictionaries hh.ru)
 CURRENCIES = [
     {"code": "RUR", "abbr": "₽", "name": "Рубли", "default": True, "rate": 1.0, "in_use": True},
     {"code": "USD", "abbr": "$", "name": "Доллары", "default": False, "rate": 0.0125, "in_use": True},
@@ -63,7 +40,6 @@ EXPERIENCE = {
 }
 SCHEDULE = {"fullDay": "Полный день", "remote": "Удаленная работа", "flexible": "Гибкий график"}
 
-# Названия вакансий: (название, уровень, какими поисковыми запросами находится)
 ROLES = {
     "system_analyst": {
         "weight": 0.40,
@@ -113,7 +89,6 @@ ROLES = {
             "REST API": 35, "Linux": 30, "SQL": 40, "Redis": 15, "Kafka": 8, "Pytest": 15,
         },
     },
-    # Шум: вакансии, которые находит поиск, но это не наши роли.
     "other": {
         "weight": 0.06,
         "base": 120_000,
@@ -128,7 +103,6 @@ ROLES = {
 LEVEL_MULT = {"junior": 0.62, "middle": 1.0, "senior": 1.45}
 LEVEL_EXP = {"junior": "noExperience", "middle": "between1And3", "senior": "between3And6"}
 
-# Как работодатели пишут навыки «вкривь и вкось» — проверка нормализации (ADR-004)
 SKILL_VARIANTS = {
     "SQL": ["sql", "SQL ", "Sql"],
     "PostgreSQL": ["Postgres", "postgresql", "PostgreSQL "],
@@ -139,8 +113,6 @@ SKILL_VARIANTS = {
     "Power BI": ["PowerBI", "Power  BI"],
 }
 
-# Вымышленные работодатели: (название, базовый город, размер найма, профиль активности)
-# профиль: stable — нанимает почти каждый месяц, seasonal — волнами, rare — изредка
 EMPLOYER_NAMES = [
     ("СибирьСофт", "90", 3.0, "stable"), ("ТомДата", "90", 2.0, "seasonal"),
     ("Северный Банк", "1", 4.0, "stable"), ("Ритейл Плюс", "1", 3.0, "stable"),
@@ -162,7 +134,6 @@ EMPLOYER_NAMES = [
     ("ИнфоСервис", "3", 0.8, "rare"), ("АйТи Аутсорс", "1", 2.5, "stable"),
 ]
 ACTIVE_PROB = {"stable": 0.92, "seasonal": 0.5, "rare": 0.22}
-# Во сколько раз умножить «размер найма»: подбирали так, чтобы было ~180 вакансий в месяц
 SIZE_SCALE = 3.5
 
 
@@ -201,7 +172,7 @@ def make_salary(rng, role, level, area, month_idx):
     hh_area, _, _, mult, no_salary_share = area
     if rng.random() < no_salary_share:
         return None
-    trend = 1 + 0.012 * month_idx  # рынок растёт ~1,2 % в месяц
+    trend = 1 + 0.012 * month_idx
     rub = ROLES[role]["base"] * LEVEL_MULT[level] * mult * trend * rng.lognormvariate(0, 0.16)
     currency = "RUR"
     if hh_area == "160":
@@ -252,7 +223,6 @@ def build_detail(vid, name, area, employer, salary, skills, level, schedule, cre
         "id": vid,
         "name": name,
         "area": {"id": hh_area, "name": area_name, "url": f"https://api.hh.ru/areas/{hh_area}"},
-        # Старое поле salary hh.ru помечает устаревшим, новое — salary_range. Отдаём оба, как API.
         "salary": None if salary is None else {k: salary[k] for k in ("from", "to", "currency", "gross")},
         "salary_range": salary,
         "experience": {"id": LEVEL_EXP[level], "name": EXPERIENCE[LEVEL_EXP[level]]},
@@ -293,7 +263,7 @@ def main() -> None:
         for emp in employers:
             if rng.random() < ACTIVE_PROB[emp["profile"]]:
                 postings += [emp] * max(1, poisson(rng, emp["size"] * SIZE_SCALE))
-        postings += [None] * poisson(rng, 6)  # анонимные работодатели
+        postings += [None] * poisson(rng, 6)
         for emp in postings:
             role = rng.choices(role_names, role_weights)[0]
             name, level, queries = rng.choice(ROLES[role]["names"])
@@ -311,7 +281,6 @@ def main() -> None:
             versions = [{"valid_from": fmt(created),
                          "detail": build_detail(vid, name, area, emp_json, salary, skills, level,
                                                 schedule, created, created)}]
-            # Изменения после публикации: 0–3 раза
             n_updates = rng.choices([0, 1, 2, 3], [55, 25, 12, 8])[0]
             life = (closed - created).total_seconds()
             moments = sorted(created + timedelta(seconds=rng.uniform(0.15, 0.95) * life) for _ in range(n_updates))
@@ -335,7 +304,6 @@ def main() -> None:
                                                         level, schedule, created, moment)})
             vacancies.append({"id": vid, "closed_at": fmt(closed), "queries": queries, "versions": versions})
 
-            # Дубль «по смыслу»: тот же работодатель, название и город, но новый id.
             if emp and rng.random() < 0.03:
                 next_id += rng.randint(1, 4000)
                 twin_id = str(next_id)

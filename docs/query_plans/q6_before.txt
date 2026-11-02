@@ -1,4 +1,4 @@
--- База: vacancies_bench; запрос: sql/queries/q6_stable_employers.sql (первая версия); дата: 2026-10-31 02:52
+-- База: vacancies_bench; запрос: sql/queries/q6_stable_employers.sql (первая версия, с коррелированным подзапросом); дата: 2026-10-31 02:52
 -- Объём: 300000 вакансий, 600846 версий
 
 Sort  (cost=61184620.89..61184644.67 rows=9511 width=45) (actual time=4042.307..4042.391 rows=5009 loops=1)

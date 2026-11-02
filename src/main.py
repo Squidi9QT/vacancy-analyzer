@@ -1,15 +1,4 @@
-"""Точка входа: python -m src.main <команда>.
-
-Команды:
-  init-db [--reset]                       создать схему (sql/001, 002)
-  load --days 7 [--as-of 2026-10-30]      загрузка за N дней
-  backfill --from 2026-03-01 --to 2026-10-30 [--window-days 2]
-                                          «прокрутить» ежедневные загрузки по фикстурам
-  report                                  SQL-отчёты → reports/*.png, *.csv и explainer/data.js
-  serve                                   (опционально) API /api/summary на FastAPI
-
-Код возврата: 0 — успех, 1 — ошибка. Планировщик (cron) понимает именно его.
-"""
+"""Точка входа: python -m src.main <команда>."""
 
 from __future__ import annotations
 
@@ -27,11 +16,7 @@ log = logging.getLogger("src.main")
 
 
 def setup_logging(level: str) -> None:
-    """Логи в консоль и в logs/etl.log.
-
-    Уровни: DEBUG — подробности (каждый запрос), INFO — ход работы, WARNING — что-то
-    странное, но работаем дальше (битая карточка, повтор запроса), ERROR — не получилось.
-    """
+    """Логи в консоль и в logs/etl.log."""
     (PROJECT_ROOT / "logs").mkdir(exist_ok=True)
     logging.basicConfig(
         level=getattr(logging, level.upper(), logging.INFO),
@@ -47,7 +32,6 @@ def _parse_date(value: str) -> date:
 def cmd_init_db(args, settings) -> None:
     with connect(settings.database_url) as conn:
         if args.reset:
-            # Удаляет ВСЕ данные. Нужен, чтобы начать «с чистого листа» в учебных целях.
             log.warning("Удаляем схему public со всеми данными")
             conn.execute("DROP SCHEMA public CASCADE; CREATE SCHEMA public;")
         apply_migrations(conn)
@@ -84,7 +68,7 @@ def cmd_backfill(args, settings) -> None:
 
 
 def cmd_report(args, settings) -> None:
-    from src.report import build_report  # pandas/matplotlib грузим только когда нужны
+    from src.report import build_report
     build_report(settings.database_url)
 
 

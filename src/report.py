@@ -1,13 +1,4 @@
-"""Отчёт: выполняет SQL из sql/queries/, сохраняет CSV и PNG в reports/,
-а результаты — в explainer/data.js для сайта-объяснения.
-
-Почему SQL в файлах, а pandas только «на выходе»: вся логика расчёта — в SQL,
-который можно проверить в psql. pandas здесь только превращает строки в таблицу
-для графика. Так у каждой цифры одна точка правды.
-
-Палитра — эталонная проверенная палитра (первые три категориальных цвета
-различимы при всех видах дальтонизма), последовательная шкала — один оттенок синего.
-"""
+"""Отчёт: SQL из sql/queries/ → CSV и PNG в reports/, данные для explainer/data.js."""
 
 from __future__ import annotations
 
@@ -20,7 +11,7 @@ from pathlib import Path
 
 import matplotlib
 
-matplotlib.use("Agg")  # рисуем в файл, окно не нужно (работает и на сервере без экрана)
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
@@ -34,7 +25,6 @@ QUERIES = PROJECT_ROOT / "sql" / "queries"
 REPORTS = PROJECT_ROOT / "reports"
 EXPLAINER_DATA = PROJECT_ROOT / "explainer" / "data.js"
 
-# Роли → цвет, порядок фиксирован (цвет следует за сущностью, а не за местом в рейтинге)
 ROLE_LABELS = {"system_analyst": "Системный аналитик", "data_analyst": "Аналитик данных",
                "backend_junior": "Junior backend"}
 ROLE_COLORS = {"system_analyst": "#2a78d6", "data_analyst": "#eb6834", "backend_junior": "#1baf7a"}
@@ -43,18 +33,12 @@ BLUE_RAMP = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "
 
 
 def run_sql(conn, name: str) -> pd.DataFrame:
-    """Выполнить sql/queries/<name>.sql и вернуть DataFrame.
-
-    Ошибка: исключение psycopg с текстом ошибки SQL (например, если схема не создана).
-    Почему не pd.read_sql: он официально поддерживает только SQLAlchemy и пишет
-    предупреждение для «голого» соединения psycopg. Собрать DataFrame самим — 2 строки.
-    """
+    """Выполнить sql/queries/<name>.sql и вернуть DataFrame."""
     with conn.cursor() as cur:
         cur.execute((QUERIES / f"{name}.sql").read_text(encoding="utf-8"))
         cols = [d.name for d in cur.description]
         rows = cur.fetchall()
     df = pd.DataFrame(rows, columns=cols)
-    # Decimal (тип NUMERIC из PostgreSQL) → float, иначе matplotlib и JSON спотыкаются
     for col in df.columns:
         if df[col].map(lambda x: isinstance(x, Decimal)).any():
             df[col] = df[col].astype(float)
@@ -62,14 +46,7 @@ def run_sql(conn, name: str) -> pd.DataFrame:
 
 
 def wilson_interval(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
-    """95 % доверительный интервал для доли k/n (метод Уилсона).
-
-    Зачем: «в Томске 49 % без зарплаты, в Казани 39 %» — различие или случайность?
-    При 41 вакансии в Казани одна вакансия меняет долю на 2,4 п.п. Если интервалы
-    двух городов сильно перекрываются, говорить о различии рано.
-    Почему Уилсон, а не «p ± 1.96·√(p(1−p)/n)»: простая формула врёт на малых n
-    и долях около 0 или 1 (может дать интервал меньше нуля).
-    """
+    """95 % доверительный интервал для доли k/n (метод Уилсона)."""
     if n == 0:
         return 0.0, 0.0
     p = k / n
@@ -136,11 +113,7 @@ def chart_salary_trend(df: pd.DataFrame, path: Path) -> None:
 
 
 def chart_no_salary(df: pd.DataFrame, path: Path) -> pd.DataFrame:
-    """Столбцы с доверительными интервалами вместо круговой диаграммы.
-
-    Круговая диаграмма отвечает на «из чего состоит целое», а у нас 8 отдельных
-    долей, которые нужно СРАВНИТЬ между собой. Длины столбцов сравниваются точнее углов.
-    """
+    """Столбцы с доверительными интервалами вместо круговой диаграммы."""
     cities = df[df["city"] != "Все города"].sort_values("pct_without_salary").copy()
     total = df[df["city"] == "Все города"].iloc[0]
     ci = [wilson_interval(int(k), int(n)) for k, n in zip(cities["without_salary"], cities["vacancies"])]
@@ -205,7 +178,7 @@ def _jsonable(df: pd.DataFrame) -> list[dict]:
                 v = v.isoformat()[:10]
             elif isinstance(v, float) and math.isnan(v):
                 v = None
-            elif hasattr(v, "item"):  # numpy-числа
+            elif hasattr(v, "item"):
                 v = v.item()
             clean[k] = v
         out.append(clean)
@@ -213,11 +186,7 @@ def _jsonable(df: pd.DataFrame) -> list[dict]:
 
 
 def build_report(database_url: str) -> None:
-    """Построить все отчёты.
-
-    Вход: строка подключения. Выход: файлы в reports/ и explainer/data.js.
-    Пустая база — понятное сообщение и выход без графиков (а не стектрейс).
-    """
+    """Построить все отчёты."""
     REPORTS.mkdir(exist_ok=True)
     with connect(database_url) as conn:
         n = conn.execute("SELECT count(*) FROM vacancy").fetchone()[0]
@@ -225,7 +194,6 @@ def build_report(database_url: str) -> None:
             log.warning("В базе нет вакансий — сначала запустите: python -m src.main load --days 7")
             return
         meta = conn.execute(
-            # to_char в московском времени: ::text выдал бы время в поясе сессии (+07 на машине разработки)
             """SELECT to_char(max(as_of) AT TIME ZONE 'Europe/Moscow', 'YYYY-MM-DD HH24:MI "МСК"'), count(*), (SELECT count(*) FROM vacancy_snapshot),
                       (SELECT count(*) FROM employer), (SELECT count(*) FROM skill)
                FROM load_run WHERE status = 'success'""").fetchone()
@@ -247,8 +215,7 @@ def build_report(database_url: str) -> None:
         "q4_ci": _jsonable(q4[["city", "ci_low", "ci_high"]].round(1)),
     }
     EXPLAINER_DATA.write_text(
-        "// Сгенерировано командой `python -m src.main report`. Не редактировать вручную.\n"
-        "// Обычный <script>, а не fetch('data.json'): так сайт работает при открытии файла без сервера.\n"
+        "// Generated by `python -m src.main report`\n"
         f"window.REPORT_DATA = {json.dumps(payload, ensure_ascii=False)};\n",
         encoding="utf-8")
     log.info("Отчёт готов: %s (графики и CSV), %s", REPORTS, EXPLAINER_DATA)

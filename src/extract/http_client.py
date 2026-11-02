@@ -1,10 +1,4 @@
-"""HTTP-клиент официального API hh.ru с повторами, паузами и таймаутами.
-
-Правила hh.ru, которые мы соблюдаем:
-* User-Agent с названием приложения и контактом — иначе 400/403;
-* пауза между запросами (HH_REQUEST_DELAY), чтобы не получить 429;
-* качаем только нужное: детальную карточку — только для новых или изменённых вакансий.
-"""
+"""HTTP-клиент официального API hh.ru с повторами, паузами и таймаутами."""
 
 from __future__ import annotations
 
@@ -20,18 +14,11 @@ from src.extract.base import BaseClient, HHApiError
 
 log = logging.getLogger(__name__)
 
-# Статусы, после которых имеет смысл подождать и повторить:
-# 429 — слишком много запросов; 5xx — временная проблема на стороне сервера.
 RETRY_STATUSES = frozenset({429, 500, 502, 503, 504})
 
 
 class HHClient(BaseClient):
-    """Клиент https://api.hh.ru.
-
-    Вход конструктора: user_agent (обязателен по правилам hh.ru), токен (опционально),
-    delay — минимальная пауза между запросами, max_attempts — сколько раз пробовать.
-    session и sleep можно подменить в тестах, чтобы не ходить в сеть и не ждать.
-    """
+    """Клиент https://api.hh.ru."""
 
     BASE_URL = "https://api.hh.ru"
 
@@ -42,13 +29,12 @@ class HHClient(BaseClient):
                  sleep: Callable[[float], None] = time.sleep) -> None:
         self.session = session or requests.Session()
         self.session.headers["User-Agent"] = user_agent
-        self.session.headers["HH-User-Agent"] = user_agent  # hh.ru просит дублировать
+        self.session.headers["HH-User-Agent"] = user_agent
         if token:
             self.session.headers["Authorization"] = f"Bearer {token}"
         self.delay = delay
         self.max_attempts = max_attempts
         self.backoff_base = backoff_base
-        # (подключение, чтение): без таймаута зависший сервер «повесит» загрузку навсегда
         self.timeout = timeout
         self._sleep = sleep
         self._last_request_at = 0.0
@@ -61,23 +47,14 @@ class HHClient(BaseClient):
         self._last_request_at = time.monotonic()
 
     def backoff_seconds(self, attempt: int, retry_after: str | None = None) -> float:
-        """Сколько ждать перед попыткой attempt+1.
-
-        Экспоненциальная задержка: 1, 2, 4, 8 … секунд плюс случайная добавка (jitter)
-        до 10 %. Jitter нужен, чтобы много клиентов, получивших 429 одновременно,
-        не вернулись тоже одновременно. Если сервер прислал Retry-After — слушаемся его.
-        """
+        """Сколько ждать перед попыткой attempt+1."""
         if retry_after and retry_after.isdigit():
             return float(retry_after)
         base = self.backoff_base * (2 ** (attempt - 1))
         return base + random.uniform(0, base * 0.1)
 
     def _get(self, path: str, params: dict | None = None) -> dict | None:
-        """GET-запрос с повторами.
-
-        Выход: разобранный JSON; None для 404.
-        Ошибка: HHApiError, если статус не повторяемый (400, 403…) или попытки кончились.
-        """
+        """GET-запрос с повторами."""
         url = f"{self.BASE_URL}{path}"
         for attempt in range(1, self.max_attempts + 1):
             self._throttle()

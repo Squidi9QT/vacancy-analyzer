@@ -14,7 +14,6 @@ from src.pipeline import end_of_day, run_load
 def test_summary(db, monkeypatch):
     as_of = end_of_day(date(2026, 10, 30))
     run_load(db, FixtureClient(FIXTURE_WORLD, as_of), as_of, 7, "fixtures")
-    # API читает DATABASE_URL при каждом запросе — направляем его в тестовую базу
     monkeypatch.setenv("DATABASE_URL", get_settings().test_database_url)
     from src.api import app
     data = TestClient(app).get("/api/summary").json()

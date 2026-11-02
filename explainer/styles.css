@@ -1,4 +1,3 @@
-/* Цвета — токены. Тёмная тема — отдельные значения тех же ролей, а не инверсия. */
 :root {
   color-scheme: light;
   --bg: #fcfcfb;
@@ -10,10 +9,7 @@
   --muted: #76756f;
   --accent: #2a78d6;
   --accent-soft: #e3eefb;
-  --s1: #2a78d6;  /* системный аналитик */
-  --s2: #eb6834;  /* аналитик данных */
-  --s3: #1baf7a;  /* junior backend */
-  --good: #0f7a3d;
+  --s1: #2a78d6;    --s2: #eb6834;    --s3: #1baf7a;    --good: #0f7a3d;
   --good-soft: #e1f4e8;
   --bad: #c0362c;
   --bad-soft: #fbe4e2;
@@ -68,7 +64,6 @@ h3 { font-size: 1.02rem; margin: 0 0 6px; }
 .gap { gap: 12px; }
 .wrap { flex-wrap: wrap; }
 
-/* Каркас */
 .topbar {
   position: fixed; inset: 0 0 auto 0; height: 52px; z-index: 30;
   display: flex; align-items: center; gap: 12px; padding: 0 16px;
@@ -104,7 +99,6 @@ main { margin-left: 260px; padding: 76px 40px 40px; max-width: 1180px; }
   h1 { font-size: 1.4rem; }
 }
 
-/* Компоненты */
 .btn {
   border: 1px solid var(--border); background: var(--surface); color: var(--text);
   border-radius: 8px; padding: 8px 14px; cursor: pointer; font: inherit; font-size: .93rem;
@@ -136,7 +130,6 @@ main { margin-left: 260px; padding: 76px 40px 40px; max-width: 1180px; }
 .stat b { display: block; font-size: 1.4rem; }
 .stat span { color: var(--muted); font-size: .82rem; }
 
-/* «Вопрос → варианты → выбор → почему» */
 .qvcw { display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; margin: 8px 0; }
 .qvcw dt { color: var(--muted); font-size: .85rem; padding-top: 2px; }
 .qvcw dd { margin: 0; }
@@ -154,7 +147,6 @@ details.acc > summary::before { content: "▸"; color: var(--muted); transition:
 details.acc[open] > summary::before { transform: rotate(90deg); }
 details.acc > .acc-body { padding: 0 16px 14px 34px; }
 
-/* Схемы */
 .map-wrap, .er-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px; overflow-x: auto; }
 .map-wrap svg { min-width: 640px; width: 100%; height: auto; display: block; }
 .er-wrap svg { min-width: 760px; width: 100%; height: auto; display: block; }
@@ -181,7 +173,6 @@ details.acc > .acc-body { padding: 0 16px 14px 34px; }
 .er-link.active { stroke: var(--accent); stroke-width: 2.4; }
 .er-card { fill: var(--muted); font-size: 11px; }
 
-/* Таблицы данных */
 .tbl-wrap { overflow-x: auto; margin: 8px 0; }
 table.data { border-collapse: collapse; font-size: .86rem; min-width: 100%; }
 table.data caption { text-align: left; font-weight: 600; padding: 4px 0; color: var(--text-2); font-size: .85rem; }
@@ -200,7 +191,6 @@ td.cell-hl { outline: 2px solid var(--accent); outline-offset: -2px; font-weight
 .tables-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
 .tables-row > .tbl-wrap { flex: 0 1 auto; }
 
-/* SQL-уроки */
 .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
 .lesson-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
 @media (max-width: 1000px) { .lesson-grid { grid-template-columns: minmax(0, 1fr); } }
@@ -211,7 +201,6 @@ td.cell-hl { outline: 2px solid var(--accent); outline-offset: -2px; font-weight
 .step-dots span.on { background: var(--accent); }
 .step-text { min-height: 3em; }
 
-/* ETL */
 .timeline { position: relative; display: flex; gap: 6px; align-items: flex-end; min-height: 120px; padding: 10px 0; overflow-x: auto; }
 .tl-item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: .78rem; flex: 0 0 auto; }
 .tl-req { width: 54px; height: 34px; border-radius: 6px; display: grid; place-items: center; font-weight: 700; color: #fff; }
@@ -227,13 +216,11 @@ td.cell-hl { outline: 2px solid var(--accent); outline-offset: -2px; font-weight
 .seg button { border: 0; background: var(--surface); color: var(--text); padding: 7px 12px; cursor: pointer; font: inherit; font-size: .9rem; }
 .seg button.on { background: var(--accent); color: #fff; }
 
-/* Глоссарий */
 .search { width: 100%; max-width: 520px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; }
 .glossary { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 10px; }
 .glossary .card h3 { color: var(--accent); }
 .glossary mark { background: var(--warn-soft); color: inherit; }
 
-/* Тесты */
 .quiz { margin: 10px 0; }
 .quiz .opts { display: grid; gap: 6px; margin: 8px 0; }
 .quiz .opt {
@@ -250,7 +237,6 @@ td.cell-hl { outline: 2px solid var(--accent); outline-offset: -2px; font-weight
 .score { position: sticky; top: 60px; z-index: 5; display: inline-block; background: var(--surface); border: 1px solid var(--border); border-radius: 99px; padding: 4px 14px; font-weight: 600; }
 .level { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 
-/* Графики */
 .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 16px 0; }
 .chart-card svg { width: 100%; height: auto; display: block; overflow: visible; }
 .chart-card .axis text, .chart-card text.lbl { fill: var(--text-2); font-size: 11px; }
@@ -273,11 +259,9 @@ td.cell-hl { outline: 2px solid var(--accent); outline-offset: -2px; font-weight
 .view-toggle { float: right; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 
-/* Узкие экраны: длинные идентификаторы и переключатели переносятся, а не растягивают страницу */
 code { overflow-wrap: anywhere; }
 pre code { overflow-wrap: normal; }
 .seg { flex-wrap: wrap; max-width: 100%; }
 .qvcw dd, .qvcw dt { min-width: 0; overflow-wrap: anywhere; }
 .chart-card, .panel, .card { min-width: 0; }
-/* SQL в уроках переносится по строкам: колонка узкая, горизонтальная прокрутка мешает следить за подсветкой */
 .sql-code { white-space: pre-wrap; font-size: .82rem; }

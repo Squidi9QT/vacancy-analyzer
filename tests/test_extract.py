@@ -47,7 +47,7 @@ def test_user_agent_and_timeout_are_set():
     client, session, _ = make_client([FakeResponse(200, {"id": "1"})])
     client.get_vacancy("1")
     assert session.headers["User-Agent"] == "Test/1.0 (test@example.com)"
-    assert session.calls[0][2] == (5.0, 30.0)  # таймаут передаётся в каждый запрос
+    assert session.calls[0][2] == (5.0, 30.0)
 
 
 def test_retries_on_429_and_5xx_with_exponential_backoff():
@@ -55,7 +55,6 @@ def test_retries_on_429_and_5xx_with_exponential_backoff():
         [FakeResponse(429), FakeResponse(503), FakeResponse(500), FakeResponse(200, {"id": "1"})])
     assert client.get_vacancy("1") == {"id": "1"}
     assert len(session.calls) == 4
-    # 1, 2, 4 секунды + jitter до 10 %
     assert [int(s) for s in sleeps] == [1, 2, 4]
     assert all(s <= b * 1.1 for s, b in zip(sleeps, [1, 2, 4]))
 
@@ -83,7 +82,7 @@ def test_403_is_not_retried():
     client, session, _ = make_client([FakeResponse(403, {"errors": [{"type": "forbidden"}]})])
     with pytest.raises(HHApiError, match="403"):
         client.get_vacancy("1")
-    assert len(session.calls) == 1  # повторять бессмысленно: без токена ответ не изменится
+    assert len(session.calls) == 1
 
 
 def test_404_returns_none():

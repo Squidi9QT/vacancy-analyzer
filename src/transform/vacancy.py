@@ -1,10 +1,4 @@
-"""Преобразование детальной карточки вакансии hh.ru в VacancyRecord.
-
-Что делает transform и почему это отдельный шаг:
-JSON из API вложенный ({"area": {"id": ..., "name": ...}}), поля бывают null,
-навыки пишут как попало. Таблицам нужны плоские, проверенные значения.
-Transform — чистые функции без базы и сети: их легко тестировать на фикстурах.
-"""
+"""Преобразование детальной карточки вакансии hh.ru в VacancyRecord."""
 
 from __future__ import annotations
 
@@ -25,13 +19,7 @@ class TransformError(ValueError):
 
 
 def _salary(detail: dict) -> tuple[int | None, int | None, str | None, bool | None]:
-    """Достать зарплату. Новое поле salary_range приоритетнее устаревшего salary.
-
-    Особые случаи:
-    * 0 или отрицательное число считаем «не указано» (NULL), а не нулевой зарплатой;
-    * from > to — почти всегда опечатка, меняем местами и пишем WARNING;
-    * границ нет, но валюта есть — зарплаты нет, валюту тоже не храним (CHECK в БД).
-    """
+    """Достать зарплату. Новое поле salary_range приоритетнее устаревшего salary."""
     sal = detail.get("salary_range") or detail.get("salary")
     if not sal:
         return None, None, None, None
@@ -58,19 +46,12 @@ def _skills(detail: dict) -> tuple[SkillRecord, ...]:
         if not raw.strip():
             continue
         key = normalize_skill(raw)
-        # Первое написание побеждает: 'SQL' и 'sql' в одной вакансии → один навык
         result.setdefault(key, SkillRecord(name=clean_skill_name(raw), name_normalized=key))
     return tuple(sorted(result.values(), key=lambda s: s.name_normalized))
 
 
 def content_hash(rec: VacancyRecord) -> str:
-    """SHA-256 от значимых полей вакансии.
-
-    Если хэш не изменился — вакансия не изменилась, новую версию в истории не пишем.
-    Почему хэш, а не сравнение колонок: в SQL NULL = NULL даёт не TRUE, а NULL,
-    и сравнение 12 колонок с NULL-ами легко написать неправильно. Строку из 64 символов
-    сравнить надёжно. json.dumps(sort_keys=True) даёт одинаковую строку для одинаковых данных.
-    """
+    """SHA-256 от значимых полей вакансии."""
     payload = {
         "name": rec.name,
         "area": rec.area.hh_id,
@@ -86,13 +67,7 @@ def content_hash(rec: VacancyRecord) -> str:
 
 
 def transform_vacancy(detail: dict, search_role: str) -> VacancyRecord:
-    """Детальная карточка из API → VacancyRecord.
-
-    Вход: dict из GET /vacancies/{id}; роль поискового запроса, которым нашли вакансию.
-    Выход: VacancyRecord с заполненным content_hash.
-    Ошибка: TransformError, если нет id, названия, города или дат. Загрузчик такую
-    вакансию пропускает с WARNING и идёт дальше (одна битая карточка не валит загрузку).
-    """
+    """Детальная карточка из API → VacancyRecord."""
     try:
         hh_id = str(detail["id"])
         name = detail["name"].strip()
@@ -105,8 +80,6 @@ def transform_vacancy(detail: dict, search_role: str) -> VacancyRecord:
         raise TransformError(f"Вакансия {hh_id}: пустое название")
 
     emp = detail.get("employer") or {}
-    # У анонимного работодателя нет id — сохранять его в employer бессмысленно:
-    # все «Компания скрыта» слились бы в одну огромную компанию.
     employer = (EmployerRecord(hh_id=str(emp["id"]), name=emp.get("name") or "?",
                                is_trusted=bool(emp.get("trusted")))
                 if emp.get("id") else None)
@@ -124,13 +97,10 @@ def transform_vacancy(detail: dict, search_role: str) -> VacancyRecord:
         salary_gross=gross,
         experience=(detail.get("experience") or {}).get("id"),
         schedule=(detail.get("schedule") or {}).get("id"),
-        # Бывает, что created_at > published_at из-за рассинхрона часов источника;
-        # CHECK в БД это запретит, поэтому берём минимум.
         created_at=min(created_at, published_at),
         published_at=published_at,
         skills=_skills(detail),
     )
-    # dataclass frozen: «пересобираем» запись с хэшем вместо присваивания
     return VacancyRecord(**{**rec.__dict__, "content_hash": content_hash(rec)})
 
 

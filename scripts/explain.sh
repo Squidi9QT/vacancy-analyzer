@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# Сохранить план выполнения запроса: scripts/explain.sh <база> <файл.sql> <куда.txt>
-# EXPLAIN (ANALYZE, BUFFERS) реально ВЫПОЛНЯЕТ запрос и показывает время и чтения
-# по каждому узлу плана. Для запросов, меняющих данные, его оборачивают в BEGIN … ROLLBACK.
+# Usage: scripts/explain.sh <база> <файл.sql> <куда.txt>
 set -euo pipefail
 db="$1"; sql="$2"; out="$3"
 {

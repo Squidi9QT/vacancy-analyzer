@@ -1,16 +1,4 @@
-"""Проверка сайта-объяснения в headless-браузере (Playwright).
-
-Что проверяет:
-  * сайт открывается как файл (file://) — без сервера;
-  * в консоли нет ошибок, на странице нет необработанных исключений;
-  * все интерактивные элементы срабатывают: анимация, клики по схемам, ETL-демо,
-    шаги всех SQL-уроков, поиск в глоссарии, альтернативы ADR, графики, тесты;
-  * на ширине телефона (375 px) нет горизонтальной прокрутки страницы.
-
-Запуск: python scripts/check_explainer.py [папка_для_скриншотов]
-Код возврата: 0 — всё хорошо, 1 — найдены проблемы.
-Нужен Playwright: pip install playwright && python -m playwright install chromium
-"""
+"""Проверка сайта-объяснения в headless-браузере (Playwright)."""
 
 from __future__ import annotations
 
@@ -55,18 +43,14 @@ def main() -> int:
         if counts["interview"] < 30:
             problems.append(f"вопросов на собеседовании {counts['interview']} < 30")
 
-        # Карта: клик по блоку и анимация
         page.click("#mapSvg .node[data-id='transform']")
         assert "Transform" in page.inner_text("#mapDetails")
         page.click("#animBtn")
         page.wait_for_function("document.querySelector('#animCaption').textContent.includes('Шаг 2')", timeout=10000)
-        # ER: клик по таблице
         page.click("#erSvg .er-table[data-id='vacancy_snapshot']")
         if "SCD тип 2" not in page.inner_text("#erDetails"):
             problems.append("ER: детали vacancy_snapshot не показались")
-        # Требования: тренажёр
         page.click("#reqQuiz .opt >> nth=1")
-        # ETL
         page.click("#pagSeg button[data-found='2600']")
         page.click("#pagRun")
         page.wait_for_function("document.querySelector('#pagLog').textContent.includes('потеряны')", timeout=15000)
@@ -74,7 +58,6 @@ def main() -> int:
         page.wait_for_function("document.querySelector('#retLog').textContent.includes('Успех')", timeout=15000)
         for mode in ("repeat", "change", "plain"):
             page.click(f"#upSeg button[data-m='{mode}']")
-        # SQL: все шаги всех уроков
         for i in range(counts["sqlTabs"]):
             page.click(f"#sqlTabs button >> nth={i}")
             while page.is_enabled("#sqlLesson [data-a='next']"):
@@ -82,16 +65,13 @@ def main() -> int:
             title = page.inner_text("#sqlLesson .step-title")
             if "Шаг" not in title:
                 problems.append(f"SQL-урок {i}: нет заголовка шага")
-            # Если у шага задан фрагмент SQL (mark), он должен быть подсвечен
             has_mark = page.evaluate(f"window.CONTENT.sqlLessons[{i}].steps.at(-1).mark !== ''")
             if has_mark and not page.query_selector("#sqlLesson .sql-code .mark"):
                 problems.append(f"SQL-урок {i}: фрагмент SQL последнего шага не найден в тексте запроса")
-        # Глоссарий
         page.fill("#glossarySearch", "индекс")
         n = page.evaluate("document.querySelectorAll('#glossaryList .card').length")
         if n < 3:
             problems.append(f"поиск «индекс» нашёл {n} терминов")
-        # ADR, графики, собеседование, тест
         page.click("#adrList [data-alt='ADR-003']")
         if page.is_hidden("#alt-ADR-003"):
             problems.append("ADR: альтернатива не раскрылась")
@@ -113,7 +93,6 @@ def main() -> int:
             page.goto(URL + "#charts")
             page.screenshot(path=str(shots / "desktop_charts.png"), full_page=False)
 
-        # Телефон: нет горизонтальной прокрутки страницы
         mobile = browser.new_page(viewport={"width": 375, "height": 800})
         mobile.on("pageerror", lambda e: problems.append(f"mobile pageerror: {e}"))
         mobile.goto(URL)

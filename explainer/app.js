@@ -1,5 +1,3 @@
-// Логика сайта-объяснения. Без библиотек и сборщиков: открывается двойным кликом по index.html.
-// Тексты — в content-*.js, данные отчёта — в data.js (генерирует `python -m src.main report`).
 (function () {
   "use strict";
   const C = window.CONTENT;
@@ -46,7 +44,6 @@
   }
   const hideTip = () => { tip.hidden = true; };
 
-  // Таблица данных для уроков и «табличного вида» графиков
   function dataTable({ caption, cols, rows, cls = [], cells = [] }) {
     const hlCells = new Set(cells.map(([r, c]) => r + ":" + c));
     let html = `<table class="data">${caption ? `<caption>${esc(caption)}</caption>` : ""}<tr>`;
@@ -93,7 +90,7 @@
       const next = cur === "dark" ? "light" : "dark";
       document.documentElement.dataset.theme = next;
       storage.set("theme", next);
-      renderCharts(); // цвета SVG-графиков берутся из токенов при отрисовке
+      renderCharts();
     });
   }
 
@@ -115,7 +112,6 @@
     s.appendChild(defs);
     const nodes = C.mapNodes;
     const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
-    // Рёбра: сначала слева направо, потом вниз и справа налево (змейка)
     for (let i = 0; i < nodes.length - 1; i++) {
       const a = nodes[i], b = nodes[i + 1];
       let x1, y1, x2, y2;
@@ -168,7 +164,6 @@
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   function movePacket(p, from, to) {
     if (reduceMotion) { p.setAttribute("cx", to.x); p.setAttribute("cy", to.y); return Promise.resolve(); }
-    // Движемся по «змейке»: при смене ряда — сначала вертикально
     const dur = 700;
     return new Promise((resolve) => {
       const t0 = performance.now();
@@ -226,8 +221,6 @@
     const box = {};
     C.erTables.forEach((t) => { box[t.id] = { x: t.x, y: t.y, w: ER_W, h: ER_HEAD + t.cols.length * ER_ROW + 6 }; });
     const linkEls = [];
-    // Линия крепится к строке ключа: у родителя — к PK, у потомка — к колонке внешнего ключа.
-    // Так связи не сходятся в одну точку, и видно, какая колонка на что ссылается.
     const rowY = (tableId, colName) => {
       const t = C.erTables.find((x) => x.id === tableId);
       const i = t.cols.findIndex((c) => c[0] === colName);
@@ -285,7 +278,6 @@
   // ---------- 5. ETL ----------
   function initETL() {
     const root = $("#etlDemos");
-    // Пагинация
     const pag = el("div", { class: "panel" }, `<h2>Пагинация</h2><p>${C.etlIntro.pagination}</p>
       <div class="row gap wrap"><div class="seg" id="pagSeg"><button class="on" data-found="250">found = 250</button><button data-found="2600">found = 2600</button></div>
       <button class="btn primary" id="pagRun">▶ Пройти страницы</button></div>
@@ -321,7 +313,6 @@
       $("#pagRun").disabled = false;
     });
 
-    // Повторы с экспоненциальной задержкой
     const SCEN = { ok: [429, 503, 500, 200], fail: [503, 503, 503, 503, 503], forbidden: [403] };
     const ret = el("div", { class: "panel" }, `<h2>Retry с экспоненциальной задержкой</h2><p>${C.etlIntro.retry}</p>
       <div class="row gap wrap"><div class="seg" id="retSeg"><button class="on" data-s="ok">429 → 503 → 500 → 200</button><button data-s="fail">5 раз 503</button><button data-s="forbidden">403</button></div>
@@ -358,7 +349,6 @@
       $("#retRun").disabled = false;
     });
 
-    // Upsert при повторном запуске
     const up = el("div", { class: "panel" }, `<h2>INSERT … ON CONFLICT: первый и повторный запуск</h2><p>${C.etlIntro.upsert}</p>
       <div class="seg" id="upSeg"><button class="on" data-m="first">Первый запуск</button><button data-m="repeat">Повторный запуск</button><button data-m="change">Повтор, зарплата изменилась</button><button data-m="plain">Без ON CONFLICT</button></div>
       <div id="upView"></div>`);
@@ -570,7 +560,6 @@
   }
   function drawSkills() {
     const role = chartState.skillRole;
-    // Колонки q1: vacancies (все аналитики), system_analyst, data_analyst
     const key = role === "all" ? "vacancies" : role;
     const rows = D.q1_top_skills.map((r) => ({ label: r.skill, n: r[key] }))
       .filter((r) => r.n > 0).sort((a, b) => b.n - a.n).slice(0, 15);
@@ -640,7 +629,6 @@
     $("#chNoSalary-table").innerHTML = dataTable({ cols: ["Город", "Вакансий", "Без зарплаты", "%", "Интервал, %"], rows: all.map((r) => [r.city, r.vacancies, r.without_salary, r.pct_without_salary, ciMap[r.city] ? ciMap[r.city].join("–") : "—"]) });
   }
   function rampColor(t) {
-    // Последовательная шкала: один синий оттенок от светлого к тёмному
     const stops = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"].map((h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)));
     const p = Math.max(0, Math.min(1, t)) * (stops.length - 1);
     const i = Math.min(stops.length - 2, Math.floor(p)), f = p - i;
@@ -756,7 +744,6 @@
 
   // ---------- запуск ----------
   function safe(name, fn) {
-    // Ошибка в одном разделе не должна ломать остальные
     try { fn(); } catch (e) { console.error("Раздел " + name + " не отрисовался:", e); }
   }
   initTheme();

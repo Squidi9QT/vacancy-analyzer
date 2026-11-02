@@ -10,7 +10,7 @@ from src.transform import TransformError, classify_role, normalize_skill, transf
 def test_basic_fields(load_json):
     rec = transform_vacancy(load_json("vacancy_detail.json"), "system_analyst")
     assert rec.hh_id == "104857600"
-    assert rec.name == "Системный аналитик (Middle)"  # пробелы по краям обрезаны
+    assert rec.name == "Системный аналитик (Middle)"
     assert rec.role == "system_analyst"
     assert rec.area.hh_id == "90" and rec.area.name == "Томск"
     assert rec.employer.hh_id == "10000" and rec.employer.is_trusted
@@ -20,13 +20,11 @@ def test_basic_fields(load_json):
 
 def test_salary_range_has_priority_over_deprecated_salary(load_json):
     rec = transform_vacancy(load_json("vacancy_detail.json"), "system_analyst")
-    # salary (устаревшее) = 100–140 gross, salary_range (новое) = 120–160 net
     assert (rec.salary_from, rec.salary_to, rec.currency_code, rec.salary_gross) == (120000, 160000, "RUR", False)
 
 
 def test_skills_are_normalized_and_deduplicated(load_json):
     rec = transform_vacancy(load_json("vacancy_detail.json"), "system_analyst")
-    # 'SQL' и 'sql ' → один навык; 'Postgres' → 'postgresql'; пустой навык выброшен
     assert [s.name_normalized for s in rec.skills] == ["bpmn", "postgresql", "sql"]
     assert {s.name for s in rec.skills} == {"BPMN", "Postgres", "SQL"}
 
@@ -45,16 +43,16 @@ def test_broken_vacancy_raises(load_json):
 
 
 @pytest.mark.parametrize("salary, expected", [
-    ({"from": 200000, "to": 150000, "currency": "RUR", "gross": False}, (150000, 200000)),  # перепутаны
-    ({"from": 0, "to": 90000, "currency": "RUR", "gross": False}, (None, 90000)),          # 0 = не указано
-    ({"from": None, "to": None, "currency": "RUR", "gross": False}, (None, None)),         # только валюта
+    ({"from": 200000, "to": 150000, "currency": "RUR", "gross": False}, (150000, 200000)),
+    ({"from": 0, "to": 90000, "currency": "RUR", "gross": False}, (None, 90000)),
+    ({"from": None, "to": None, "currency": "RUR", "gross": False}, (None, None)),
 ])
 def test_salary_edge_cases(load_json, salary, expected):
     detail = load_json("vacancy_detail.json") | {"salary_range": salary, "salary": None}
     rec = transform_vacancy(detail, "system_analyst")
     assert (rec.salary_from, rec.salary_to) == expected
     if expected == (None, None):
-        assert rec.currency_code is None  # иначе нарушим CHECK chk_vacancy_currency
+        assert rec.currency_code is None
 
 
 def test_salary_without_currency_is_error(load_json):
@@ -68,10 +66,8 @@ def test_content_hash_is_stable_and_sensitive(load_json):
     h1 = transform_vacancy(d, "system_analyst").content_hash
     h2 = transform_vacancy(load_json("vacancy_detail.json"), "system_analyst").content_hash
     assert h1 == h2 and len(h1) == 64
-    # порядок навыков не влияет на хэш
     d_reordered = d | {"key_skills": list(reversed(d["key_skills"]))}
     assert transform_vacancy(d_reordered, "system_analyst").content_hash == h1
-    # изменение зарплаты меняет хэш
     d_salary = d | {"salary_range": d["salary_range"] | {"to": 170000}}
     assert transform_vacancy(d_salary, "system_analyst").content_hash != h1
 
@@ -87,7 +83,7 @@ def test_content_hash_is_stable_and_sensitive(load_json):
     ("BI-аналитик", "data_analyst", "data_analyst"),
     ("Junior Python-разработчик", "backend_junior", "backend_junior"),
     ("Стажёр-разработчик Python", "backend_junior", "backend_junior"),
-    ("Python Developer", "backend_junior", "backend_junior"),  # правило не сработало → роль запроса
+    ("Python Developer", "backend_junior", "backend_junior"),
 ])
 def test_classify_role(name, search_role, expected):
     assert classify_role(name, search_role) == expected

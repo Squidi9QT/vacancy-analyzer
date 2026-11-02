@@ -1,16 +1,6 @@
--- =====================================================================
--- bench_scale.sql — синтетическая «большая» база для замеров EXPLAIN ANALYZE.
---
--- Зачем: на 1 тыс. вакансий любой запрос выполняется за миллисекунды,
--- и PostgreSQL почти всегда выбирает полное чтение таблицы (Seq Scan) — оно
--- дешевле индекса на маленьких таблицах. Чтобы увидеть, где нужны индексы,
--- нужен объём, похожий на реальный: ~300 тыс. вакансий (порядок объёма IT-вакансий
--- на hh.ru за год).
---
--- Запуск (база vacancies_bench, схема уже создана sql/001_schema.sql):
---   psql -d vacancies_bench -f scripts/bench_scale.sql
--- Данные случайные (setseed для воспроизводимости), бизнес-смысла в них нет.
--- =====================================================================
+-- Синтетическая база ~300 тыс. вакансий для замеров EXPLAIN ANALYZE.
+-- psql -d vacancies_bench -f scripts/bench_scale.sql
+
 SELECT setseed(0.42);
 
 INSERT INTO load_run (started_at, finished_at, as_of, source, status)
@@ -28,7 +18,6 @@ SELECT g::text, 'Компания ' || g, random() < 0.8 FROM generate_series(1,
 INSERT INTO skill (name, name_normalized)
 SELECT 'Навык ' || g, 'навык ' || g FROM generate_series(1, 300) g;
 
--- 300 000 вакансий, равномерно по 2026-03-01 … 2026-10-30
 INSERT INTO vacancy (hh_id, name, role, employer_id, area_id, salary_from, salary_to, currency_code,
                      salary_gross, created_at, published_at, content_hash, first_seen_at, last_seen_at)
 SELECT
@@ -48,7 +37,6 @@ CROSS JOIN LATERAL (SELECT timestamptz '2026-03-01 00:00+03'
 CROSS JOIN LATERAL (SELECT CASE WHEN random() < 0.65 THEN 50000 + floor(random() * 200000)::int END AS f,
                            NULL::int AS t, g AS dummy) s;
 
--- 1–3 версии на вакансию
 INSERT INTO vacancy_snapshot (vacancy_id, valid_from, valid_to, name, area_id, salary_from, salary_to,
                               currency_code, salary_gross, published_at, content_hash)
 SELECT v.id, v.created_at + (k - 1) * interval '7 days',
@@ -59,7 +47,6 @@ FROM vacancy v
 CROSS JOIN LATERAL (SELECT 1 + floor(random() * 3)::int AS n, v.id AS dummy) cnt
 CROSS JOIN LATERAL generate_series(1, cnt.n) k;
 
--- 5 навыков на вакансию
 INSERT INTO vacancy_skill (vacancy_id, skill_id)
 SELECT DISTINCT v.id, 1 + floor(random() * 300)::int
 FROM vacancy v CROSS JOIN generate_series(1, 5)

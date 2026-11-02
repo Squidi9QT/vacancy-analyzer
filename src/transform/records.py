@@ -1,9 +1,4 @@
-"""Плоские записи — то, что пойдёт в таблицы.
-
-Почему dataclass, а не dict: опечатка в имени поля (rec.salary_frmo) упадёт сразу,
-а не превратится в тихий None. frozen=True — запись нельзя случайно изменить
-после того, как посчитали content_hash.
-"""
+"""Плоские записи — то, что пойдёт в таблицы."""
 
 from __future__ import annotations
 
@@ -26,8 +21,8 @@ class EmployerRecord:
 
 @dataclass(frozen=True)
 class SkillRecord:
-    name: str             # как написал работодатель (после обрезки пробелов)
-    name_normalized: str  # ключ дедупликации
+    name: str
+    name_normalized: str
 
 
 @dataclass(frozen=True)
@@ -36,7 +31,7 @@ class VacancyRecord:
     name: str
     role: str
     area: AreaRecord
-    employer: EmployerRecord | None   # None — анонимный работодатель
+    employer: EmployerRecord | None
     salary_from: int | None
     salary_to: int | None
     currency_code: str | None
