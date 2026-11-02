@@ -4,7 +4,25 @@
 
 Учебный проект системного аналитика. Сервис собирает вакансии системных аналитиков, аналитиков данных и junior-backend разработчиков из официального API hh.ru, хранит их в PostgreSQL с историей изменений и отвечает на 6 бизнес-вопросов SQL-запросами и графиками.
 
-**Главный артефакт для изучения** — интерактивное объяснение `explainer/index.html`: откройте файл двойным кликом, сервер не нужен.
+**Главный артефакт** — интерактивное объяснение: [онлайн](https://squidi9qt.github.io/vacancy-analyzer/) или локально `explainer/index.html` (открывается двойным кликом, сервер не нужен).
+
+## Демо
+
+**👉 [Открыть интерактивное объяснение проекта](https://squidi9qt.github.io/vacancy-analyzer/)** — работает прямо в браузере, ничего ставить не нужно.
+
+Можно потыкать: анимацию пути вакансии через систему, кликабельную ER-диаграмму, демо повторной загрузки (ON CONFLICT), пошаговые SQL-уроки на маленьких таблицах, графики с подсказками и тест с разбором ответов.
+
+[![Карта проекта](docs/screenshots/01_map.png)](https://squidi9qt.github.io/vacancy-analyzer/#map)
+
+| | |
+|---|---|
+| **Модель данных:** клик по таблице объясняет ключи и ограничения<br>[![ER-диаграмма](docs/screenshots/02_er.png)](https://squidi9qt.github.io/vacancy-analyzer/#model) | **ETL:** что происходит при повторном запуске загрузки<br>[![Upsert](docs/screenshots/03_upsert.png)](https://squidi9qt.github.io/vacancy-analyzer/#etl) |
+| **SQL по шагам:** gaps and islands на маленькой таблице<br>[![SQL-урок](docs/screenshots/04_sql_lesson.png)](https://squidi9qt.github.io/vacancy-analyzer/#sql) | **Графики:** медиана зарплат с подсказкой при наведении<br>[![Зарплаты](docs/screenshots/05_salary_chart.png)](https://squidi9qt.github.io/vacancy-analyzer/#charts) |
+| **Навыки × города**<br>[![Тепловая карта](docs/screenshots/06_heatmap.png)](https://squidi9qt.github.io/vacancy-analyzer/#charts) | **Проверь себя:** разбор каждого варианта ответа<br>[![Тест](docs/screenshots/07_quiz.png)](https://squidi9qt.github.io/vacancy-analyzer/#selfcheck) |
+
+<p align="center"><img src="docs/screenshots/08_mobile_dark.png" width="260" alt="Мобильная версия, тёмная тема"><br><sub>Мобильная версия, тёмная тема</sub></p>
+
+Графики отчёта (matplotlib) — в [`reports/`](reports/), например [топ навыков](reports/01_top_skills.png) и [доля вакансий без зарплаты](reports/03_no_salary_by_city.png).
 
 ## Данные: важно прочитать
 
@@ -77,7 +95,8 @@ psql -d vacancies -f sql/queries/q6_stable_employers.sql   # любой запр
 | `src/api.py` | Опционально: `GET /api/summary` (нужен `pip install uvicorn`, запуск `python -m src.main serve`) |
 | `tests/` | 50 тестов: transform, extract без сети, загрузка на тестовой БД, API |
 | `explainer/` | Интерактивное объяснение проекта |
-| `scripts/` | Генератор фикстур, «большая» база для замеров, сохранение планов, проверка сайта Playwright |
+| `scripts/` | Генератор фикстур, «большая» база для замеров, сохранение планов, проверка сайта и скриншоты (Playwright) |
+| `scripts/publish_demo.sh` | Публикация `explainer/` на GitHub Pages (ветка `gh-pages`) |
 
 ## Шесть бизнес-вопросов
 

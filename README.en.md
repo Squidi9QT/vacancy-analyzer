@@ -4,7 +4,25 @@
 
 A systems analyst portfolio project. The service collects job postings for systems analysts, data analysts and junior backend developers from the official hh.ru API, stores them in PostgreSQL with change history, and answers 6 business questions with SQL queries and charts.
 
-**The main thing to explore** is the interactive walkthrough `explainer/index.html`: open the file in a browser, no server needed. (The walkthrough and the docs are in Russian.)
+**The main thing to explore** is the interactive walkthrough: [online](https://squidi9qt.github.io/vacancy-analyzer/) or locally via `explainer/index.html` (open the file, no server needed). The walkthrough and the docs are in Russian.
+
+## Live demo
+
+**👉 [Open the interactive project walkthrough](https://squidi9qt.github.io/vacancy-analyzer/)** — runs in the browser, nothing to install. (Interface in Russian.)
+
+Things to try: the animated path of one vacancy through the system, a clickable ER diagram, a re-run demo of the idempotent load (ON CONFLICT), step-by-step SQL lessons on tiny tables, charts with tooltips, and a quiz with explanations for every answer.
+
+[![Project map](docs/screenshots/01_map.png)](https://squidi9qt.github.io/vacancy-analyzer/#map)
+
+| | |
+|---|---|
+| **Data model:** click a table to see its keys and constraints<br>[![ER diagram](docs/screenshots/02_er.png)](https://squidi9qt.github.io/vacancy-analyzer/#model) | **ETL:** what happens when the load runs again<br>[![Upsert](docs/screenshots/03_upsert.png)](https://squidi9qt.github.io/vacancy-analyzer/#etl) |
+| **SQL step by step:** gaps and islands on a small table<br>[![SQL lesson](docs/screenshots/04_sql_lesson.png)](https://squidi9qt.github.io/vacancy-analyzer/#sql) | **Charts:** median salary with hover tooltips<br>[![Salary chart](docs/screenshots/05_salary_chart.png)](https://squidi9qt.github.io/vacancy-analyzer/#charts) |
+| **Skills × cities**<br>[![Heatmap](docs/screenshots/06_heatmap.png)](https://squidi9qt.github.io/vacancy-analyzer/#charts) | **Self-check quiz:** every option explained<br>[![Quiz](docs/screenshots/07_quiz.png)](https://squidi9qt.github.io/vacancy-analyzer/#selfcheck) |
+
+<p align="center"><img src="docs/screenshots/08_mobile_dark.png" width="260" alt="Mobile, dark theme"><br><sub>Mobile layout, dark theme</sub></p>
+
+Static report charts (matplotlib) are in [`reports/`](reports/), e.g. [top skills](reports/01_top_skills.png) and [share of vacancies without salary](reports/03_no_salary_by_city.png).
 
 ## Data: please read
 
@@ -77,7 +95,8 @@ psql -d vacancies -f sql/queries/q6_stable_employers.sql   # run any query direc
 | `src/api.py` | Optional: `GET /api/summary` (needs `pip install uvicorn`, run `python -m src.main serve`) |
 | `tests/` | 50 tests: transform, extract without network, loading into a test DB, API |
 | `explainer/` | Interactive project walkthrough |
-| `scripts/` | Fixture generator, large benchmark DB, plan export, Playwright site check |
+| `scripts/` | Fixture generator, large benchmark DB, plan export, Playwright site check and screenshots |
+| `scripts/publish_demo.sh` | Publishes `explainer/` to GitHub Pages (`gh-pages` branch) |
 
 ## Six business questions
 
