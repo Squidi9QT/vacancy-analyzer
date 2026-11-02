@@ -1,6 +1,3 @@
-// Раздел 6: SQL-уроки. Каждый урок — набор шагов; шаг = пояснение + фрагмент SQL + таблицы.
-// rows — строки таблицы; cls — класс подсветки строки (hl-a…hl-d — группы/окна, dim — отброшена,
-// new — появилась); cells — [строка, колонка] ячейки, на которые надо смотреть.
 window.CONTENT = window.CONTENT || {};
 
 const V = [["id", "name", "role"], [[1, "Системный аналитик", "system_analyst"], [2, "Аналитик данных", "data_analyst"], [3, "Junior Python", "backend_junior"], [4, "System Analyst", "system_analyst"]]];
