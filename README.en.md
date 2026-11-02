@@ -2,6 +2,15 @@
 
 [Русская версия](README.md)
 
+<p align="center">
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/"><img src="https://img.shields.io/badge/%E2%96%B6%20Open%20live%20demo-2a78d6?style=for-the-badge" alt="Open the interactive demo"></a>
+</p>
+
+<p align="center">
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/"><img src="docs/screenshots/demo.gif" alt="Open the interactive demo" width="820"></a><br>
+  <sub>Click the image to open the live site: run the animation, step through SQL lessons, hover over charts, take the quiz.</sub>
+</p>
+
 A systems analyst portfolio project. The service collects job postings for systems analysts, data analysts and junior backend developers from the official hh.ru API, stores them in PostgreSQL with change history, and answers 6 business questions with SQL queries and charts.
 
 **The main thing to explore** is the interactive walkthrough: [online](https://squidi9qt.github.io/vacancy-analyzer/) or locally via `explainer/index.html` (open the file, no server needed). The walkthrough and the docs are in Russian.
@@ -11,8 +20,6 @@ A systems analyst portfolio project. The service collects job postings for syste
 **👉 [Open the interactive project walkthrough](https://squidi9qt.github.io/vacancy-analyzer/)** — runs in the browser, nothing to install. (Interface in Russian.)
 
 Things to try: the animated path of one vacancy through the system, a clickable ER diagram, a re-run demo of the idempotent load (ON CONFLICT), step-by-step SQL lessons on tiny tables, charts with tooltips, and a quiz with explanations for every answer.
-
-[![Project map](docs/screenshots/01_map.png)](https://squidi9qt.github.io/vacancy-analyzer/#map)
 
 | | |
 |---|---|
@@ -95,7 +102,7 @@ psql -d vacancies -f sql/queries/q6_stable_employers.sql   # run any query direc
 | `src/api.py` | Optional: `GET /api/summary` (needs `pip install uvicorn`, run `python -m src.main serve`) |
 | `tests/` | 50 tests: transform, extract without network, loading into a test DB, API |
 | `explainer/` | Interactive project walkthrough |
-| `scripts/` | Fixture generator, large benchmark DB, plan export, Playwright site check and screenshots |
+| `scripts/` | Fixture generator, large benchmark DB, plan export, Playwright site check, screenshots and GIF |
 | `scripts/publish_demo.sh` | Publishes `explainer/` to GitHub Pages (`gh-pages` branch) |
 
 ## Six business questions

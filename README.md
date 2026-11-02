@@ -2,6 +2,15 @@
 
 [English version](README.en.md)
 
+<p align="center">
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/"><img src="https://img.shields.io/badge/%E2%96%B6%20%D0%9E%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8C%20%D0%B4%D0%B5%D0%BC%D0%BE-2a78d6?style=for-the-badge" alt="Открыть интерактивное демо"></a>
+</p>
+
+<p align="center">
+  <a href="https://squidi9qt.github.io/vacancy-analyzer/"><img src="docs/screenshots/demo.gif" alt="Открыть интерактивное демо" width="820"></a><br>
+  <sub>Нажмите на картинку — откроется живой сайт: можно запускать анимацию, шагать по SQL-урокам, наводить на графики и пройти тест.</sub>
+</p>
+
 Учебный проект системного аналитика. Сервис собирает вакансии системных аналитиков, аналитиков данных и junior-backend разработчиков из официального API hh.ru, хранит их в PostgreSQL с историей изменений и отвечает на 6 бизнес-вопросов SQL-запросами и графиками.
 
 **Главный артефакт** — интерактивное объяснение: [онлайн](https://squidi9qt.github.io/vacancy-analyzer/) или локально `explainer/index.html` (открывается двойным кликом, сервер не нужен).
@@ -11,8 +20,6 @@
 **👉 [Открыть интерактивное объяснение проекта](https://squidi9qt.github.io/vacancy-analyzer/)** — работает прямо в браузере, ничего ставить не нужно.
 
 Можно потыкать: анимацию пути вакансии через систему, кликабельную ER-диаграмму, демо повторной загрузки (ON CONFLICT), пошаговые SQL-уроки на маленьких таблицах, графики с подсказками и тест с разбором ответов.
-
-[![Карта проекта](docs/screenshots/01_map.png)](https://squidi9qt.github.io/vacancy-analyzer/#map)
 
 | | |
 |---|---|
@@ -95,7 +102,7 @@ psql -d vacancies -f sql/queries/q6_stable_employers.sql   # любой запр
 | `src/api.py` | Опционально: `GET /api/summary` (нужен `pip install uvicorn`, запуск `python -m src.main serve`) |
 | `tests/` | 50 тестов: transform, extract без сети, загрузка на тестовой БД, API |
 | `explainer/` | Интерактивное объяснение проекта |
-| `scripts/` | Генератор фикстур, «большая» база для замеров, сохранение планов, проверка сайта и скриншоты (Playwright) |
+| `scripts/` | Генератор фикстур, «большая» база для замеров, сохранение планов, проверка сайта, скриншоты и GIF (Playwright) |
 | `scripts/publish_demo.sh` | Публикация `explainer/` на GitHub Pages (ветка `gh-pages`) |
 
 ## Шесть бизнес-вопросов
